@@ -25,6 +25,8 @@
   --border:  rgba(194,98,45,0.25);
   --gold:    #D4A853;
   --red:     #E53935;
+  --white:   #F7F7F2;
+  --white2:  #FFFFFF;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -329,6 +331,116 @@ nav {
   font-weight: 600;
 }
 
+/* ── TABS TOURS (pronostics) ── */
+#tour-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 1rem;
+  scrollbar-width: thin;
+}
+#tour-tabs button {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .2s;
+}
+#tour-tabs button.active {
+  background: var(--clay);
+  border-color: var(--clay);
+  color: white;
+  font-weight: 700;
+}
+
+/* ── TABS TABLEAU (H / F / Cumulé) ── */
+.gender-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.gender-tab {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+}
+.gender-tab.tab-h.active { background: var(--green); border-color: var(--green); color: var(--white2); }
+.gender-tab.tab-f.active { background: var(--white); border-color: var(--white); color: var(--dark); }
+.gender-tab.tab-c.active { background: var(--clay); border-color: var(--clay); color: white; }
+
+/* ── SECTIONS TABLEAU H/F DANS PRONOSTICS ── */
+.tableau-block { margin-bottom: 1.5rem; }
+.tableau-label {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: fit-content;
+}
+.tableau-label.lbl-h { background: rgba(27,94,32,0.25); color: var(--green3); border: 1px solid var(--green); }
+.tableau-label.lbl-f { background: rgba(247,247,242,0.1); color: var(--white); border: 1px solid var(--white); }
+
+.match-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.match-card.mc-h { border-left-color: var(--green); }
+.match-card.mc-f { border-left-color: var(--white); }
+.match-players {
+  display: flex; align-items: center; gap: 10px;
+}
+.match-player-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--dark3);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+}
+.match-player-btn.selected.sel-h { background: var(--green); border-color: var(--green); color: var(--white2); font-weight: 700; }
+.match-player-btn.selected.sel-f { background: var(--white); border-color: var(--white); color: var(--dark); font-weight: 700; }
+.match-vs { font-size: 11px; color: var(--text3); letter-spacing: 1px; flex-shrink: 0; }
+.match-meta { font-size: 11px; color: var(--text3); margin-top: 8px; text-align: right; }
+.sets-row { display:flex; gap:8px; margin-top:8px; }
+.sets-row select {
+  flex: 1;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px;
+  font-size: 13px;
+}
+
 /* ── BOUTONS ── */
 .btn {
   padding: 10px 20px;
@@ -457,6 +569,11 @@ nav {
   <!-- PAGE CLASSEMENT -->
   <div id="page-classement" class="page">
     <div class="section-title">🏆 Classement général</div>
+    <div class="gender-tabs">
+      <button class="gender-tab tab-c active" data-cat="cumule" onclick="switchClassementTab('cumule',this)">🎾 Cumulé</button>
+      <button class="gender-tab tab-h" data-cat="h" onclick="switchClassementTab('h',this)">♂ Hommes</button>
+      <button class="gender-tab tab-f" data-cat="f" onclick="switchClassementTab('f',this)">♀ Femmes</button>
+    </div>
     <div style="text-align:right;margin-bottom:12px">
       <button class="btn btn-outline" onclick="loadRanking()">↻ Actualiser</button>
     </div>
@@ -482,8 +599,43 @@ nav {
   <!-- PAGE ADMIN -->
   <div id="page-admin" class="page">
     <div class="section-title">⚙️ Admin</div>
+
     <div class="card">
-      <p style="color:var(--text2)">Panneau admin — disponible prochainement.</p>
+      <div class="card-title">➕ Ajouter un match</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <select id="adm-add-tableau" class="auth-input" style="margin:0" onchange="renderAdminQualifies()">
+          <option value="H">♂ Hommes</option>
+          <option value="F">♀ Femmes</option>
+        </select>
+        <select id="adm-add-tour" class="auth-input" style="margin:0" onchange="renderAdminQualifies()"></select>
+      </div>
+      <input class="auth-input" id="adm-p1" placeholder="Joueur 1" list="adm-qualifies-list">
+      <input class="auth-input" id="adm-p2" placeholder="Joueur 2" list="adm-qualifies-list">
+      <datalist id="adm-qualifies-list"></datalist>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <input class="auth-input" id="adm-order" type="number" placeholder="Ordre (1,2,3...)" value="1">
+        <input class="auth-input" id="adm-deadline" type="datetime-local">
+      </div>
+      <button class="btn btn-clay" style="width:100%;margin-top:4px" onclick="adminAddMatch()">Ajouter le match</button>
+      <div id="adm-qualifies-hint" style="margin-top:10px;font-size:12px;color:var(--text3);line-height:1.6"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏁 Résultats &amp; qualifiés</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <select id="adm-res-tableau" class="auth-input" style="margin:0" onchange="loadAdminMatches()">
+          <option value="H">♂ Hommes</option>
+          <option value="F">♀ Femmes</option>
+        </select>
+        <select id="adm-res-tour" class="auth-input" style="margin:0" onchange="loadAdminMatches()"></select>
+      </div>
+      <div id="adm-matches-list"><div style="color:var(--text3);text-align:center;padding:1rem">Sélectionne un tour.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔄 Classement</div>
+      <p style="color:var(--text2);font-size:14px;margin-bottom:10px">Recalcule les points de tous les participants à partir des résultats saisis (Hommes / Femmes / Cumulé).</p>
+      <button class="btn btn-outline" style="width:100%" onclick="recomputeRanking(true)">↻ Recalculer le classement</button>
     </div>
   </div>
 
@@ -510,6 +662,20 @@ let sb, sbReady = false;
 let currentPseudo = null;
 let allResults = {}, myPronos = {};
 let ALL_PLAYERS_H = [], ALL_PLAYERS_F = [];
+
+// ── Config Tours ──
+const ROUNDS = [
+  { key: 't1',     label: '1er Tour',     sets: false, points: 1 },
+  { key: 't2',     label: '2e Tour',      sets: false, points: 2 },
+  { key: 't3',     label: '3e Tour',      sets: false, points: 3 },
+  { key: 'huit',   label: 'Huitièmes',    sets: false, points: 4 },
+  { key: 'quarts', label: 'Quarts',       sets: false, points: 5 },
+  { key: 'demi',   label: 'Demi-finales', sets: true,  points: 6, setsBonus: 4 },
+  { key: 'finale', label: 'Finale',       sets: true,  points: 8, setsBonus: 6 }
+];
+let currentTour = 't1';
+let currentClassementCat = 'cumule';
+let allMatches = [];
 
 try {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
@@ -606,10 +772,31 @@ async function loadStats() {
 }
 
 // ── Classement ──
+function switchClassementTab(cat, btn) {
+  currentClassementCat = cat;
+  document.querySelectorAll('.gender-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadRanking();
+}
 async function loadRanking() {
   const el = document.getElementById('ranking-table');
   el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text3)">Chargement...</div>';
-  const { data: snaps } = await sb.from('ranking_snapshots').select('pseudo,points,exact,position').order('position', {ascending:true});
+
+  // Colonnes selon le classement affiché : cumulé / hommes / femmes
+  const cols = currentClassementCat === 'h'
+    ? { points: 'points_h', exact: 'exact_h', position: 'position_h' }
+    : currentClassementCat === 'f'
+    ? { points: 'points_f', exact: 'exact_f', position: 'position_f' }
+    : { points: 'points_total', exact: 'exact_total', position: 'position_total' };
+
+  const { data: snaps, error } = await sb.from('ranking_snapshots')
+    .select(`pseudo, ${cols.points}, ${cols.exact}, ${cols.position}`)
+    .order(cols.position, { ascending: true });
+
+  if (error) {
+    el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text3)">Classement pas encore disponible pour cette catégorie.</div>';
+    return;
+  }
   if (!snaps || !snaps.length) {
     el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text3)">Aucune donnée pour l\'instant.</div>';
     return;
@@ -621,11 +808,266 @@ async function loadRanking() {
     html += `<div class="rank-row" style="${isMe?'background:rgba(194,98,45,0.07)':''}">
       <div class="rank-num">${medals[i]||('#'+(i+1))}</div>
       <div>${s.pseudo}${isMe?' <span style="font-size:12px;color:var(--clay3)">(moi)</span>':''}</div>
-      <div class="rank-pts">${s.points}</div>
-      <div class="rank-exact">${s.exact||0}</div>
+      <div class="rank-pts">${s[cols.points] ?? 0}</div>
+      <div class="rank-exact">${s[cols.exact] ?? 0}</div>
     </div>`;
   });
   el.innerHTML = html;
+}
+
+// ── Pronostics ──
+function renderTourTabs() {
+  const el = document.getElementById('prono-tabs');
+  el.innerHTML = '<div id="tour-tabs">' + ROUNDS.map(r =>
+    `<button class="${r.key===currentTour?'active':''}" onclick="loadMatches('${r.key}')">${r.label}</button>`
+  ).join('') + '</div>';
+}
+
+async function loadMatches(tour) {
+  currentTour = tour;
+  renderTourTabs();
+  const el = document.getElementById('prono-content');
+  el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text3)">Chargement...</div>';
+
+  const { data: matches, error } = await sb.from('matches')
+    .select('*').eq('tour', tour).order('tableau', { ascending: true }).order('order_num', { ascending: true });
+
+  if (error) {
+    el.innerHTML = '<div class="card" style="text-align:center;color:var(--text3)">Les matchs de ce tour ne sont pas encore configurés.</div>';
+    return;
+  }
+
+  const { data: pronos } = await sb.from('pronos').select('match_id,winner,sets').eq('pseudo', currentPseudo);
+  myPronos = {};
+  (pronos || []).forEach(p => myPronos[p.match_id] = p);
+
+  renderPronoContent(matches || []);
+}
+
+function renderPronoContent(matches) {
+  const el = document.getElementById('prono-content');
+  const roundCfg = ROUNDS.find(r => r.key === currentTour);
+  const mH = matches.filter(m => m.tableau === 'H');
+  const mF = matches.filter(m => m.tableau === 'F');
+  let html = renderTableauBlock('h', 'Tableau Hommes', mH, roundCfg) + renderTableauBlock('f', 'Tableau Femmes', mF, roundCfg);
+  el.innerHTML = html || '<div class="card" style="text-align:center;color:var(--text3)">Aucun match pour ce tour pour l\'instant.</div>';
+}
+
+function renderTableauBlock(gender, label, matches, roundCfg) {
+  if (!matches.length) return '';
+  let html = `<div class="tableau-block"><div class="tableau-label lbl-${gender}">${gender==='h'?'♂':'♀'} ${label}</div>`;
+  matches.forEach(m => {
+    const p = myPronos[m.id];
+    const locked = m.locked || (m.deadline && new Date(m.deadline) < new Date());
+    const safe1 = m.player1.replace(/'/g, "\\'");
+    const safe2 = m.player2.replace(/'/g, "\\'");
+    html += `<div class="match-card mc-${gender}">
+      <div class="match-players">
+        <button class="match-player-btn ${p && p.winner===m.player1 ? 'selected sel-'+gender : ''}" ${locked?'disabled':''} onclick="selectWinner('${m.id}','${safe1}')">${m.player1}</button>
+        <div class="match-vs">VS</div>
+        <button class="match-player-btn ${p && p.winner===m.player2 ? 'selected sel-'+gender : ''}" ${locked?'disabled':''} onclick="selectWinner('${m.id}','${safe2}')">${m.player2}</button>
+      </div>
+      ${roundCfg && roundCfg.sets ? renderSetsRow(m, gender, p, locked) : ''}
+      <div class="match-meta">${locked ? '🔒 Verrouillé' : (m.deadline ? '⏳ avant ' + new Date(m.deadline).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '')}</div>
+    </div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderSetsRow(m, gender, p, locked) {
+  const opts = gender === 'h' ? ['3-0','3-1','3-2'] : ['2-0','2-1'];
+  return `<div class="sets-row">
+    <select ${locked?'disabled':''} onchange="saveSets('${m.id}', this.value)">
+      <option value="">Score en sets...</option>
+      ${opts.map(o => `<option value="${o}" ${p && p.sets===o ? 'selected' : ''}>${o}</option>`).join('')}
+    </select>
+  </div>`;
+}
+
+async function selectWinner(matchId, playerName) {
+  if (!currentPseudo) return;
+  const existing = myPronos[matchId] || {};
+  const payload = { pseudo: currentPseudo, match_id: matchId, winner: playerName, sets: existing.sets || null };
+  const { error } = await sb.from('pronos').upsert(payload, { onConflict: 'pseudo,match_id' });
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  myPronos[matchId] = payload;
+  loadMatches(currentTour);
+  showToast('Pronostic enregistré ✓');
+}
+
+async function saveSets(matchId, val) {
+  if (!currentPseudo || !val) return;
+  const existing = myPronos[matchId];
+  if (!existing || !existing.winner) { showToast("Choisis d'abord le vainqueur.", 'error'); return; }
+  const payload = { pseudo: currentPseudo, match_id: matchId, winner: existing.winner, sets: val };
+  const { error } = await sb.from('pronos').upsert(payload, { onConflict: 'pseudo,match_id' });
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  myPronos[matchId] = payload;
+  showToast('Score enregistré ✓');
+}
+
+// ── Admin ──
+function initAdminSelects() {
+  const opts = ROUNDS.map(r => `<option value="${r.key}">${r.label}</option>`).join('');
+  const addSel = document.getElementById('adm-add-tour');
+  const resSel = document.getElementById('adm-res-tour');
+  if (addSel && !addSel.dataset.filled) { addSel.innerHTML = opts; addSel.dataset.filled = '1'; }
+  if (resSel && !resSel.dataset.filled) { resSel.innerHTML = opts; resSel.dataset.filled = '1'; }
+}
+
+function prevRoundKey(tourKey) {
+  const idx = ROUNDS.findIndex(r => r.key === tourKey);
+  return idx > 0 ? ROUNDS[idx-1].key : null;
+}
+
+async function renderAdminQualifies() {
+  const tableau = document.getElementById('adm-add-tableau').value;
+  const tour = document.getElementById('adm-add-tour').value;
+  const hint = document.getElementById('adm-qualifies-hint');
+  const datalist = document.getElementById('adm-qualifies-list');
+  const prevKey = prevRoundKey(tour);
+  if (!prevKey) {
+    hint.textContent = tour === 't1' ? "Premier tour : saisis directement les joueurs du tableau de départ." : '';
+    datalist.innerHTML = '';
+    return;
+  }
+  const { data: prevMatches, error } = await sb.from('matches').select('winner').eq('tour', prevKey).eq('tableau', tableau);
+  if (error) { hint.textContent = ''; return; }
+  const winners = (prevMatches || []).map(m => m.winner).filter(Boolean);
+  datalist.innerHTML = winners.map(w => `<option value="${w.replace(/"/g,'&quot;')}">`).join('');
+  const prevLabel = ROUNDS.find(r => r.key === prevKey).label;
+  hint.textContent = winners.length
+    ? `✅ Qualifié(e)s du ${prevLabel} (${winners.length}) : ${winners.join(', ')}`
+    : `⏳ Aucun résultat encore saisi pour le ${prevLabel} — les noms tapés ici seront libres.`;
+}
+
+async function adminAddMatch() {
+  const tableau = document.getElementById('adm-add-tableau').value;
+  const tour = document.getElementById('adm-add-tour').value;
+  const p1 = document.getElementById('adm-p1').value.trim();
+  const p2 = document.getElementById('adm-p2').value.trim();
+  const order_num = parseInt(document.getElementById('adm-order').value) || 0;
+  const deadlineVal = document.getElementById('adm-deadline').value;
+  if (!p1 || !p2) { showToast('Renseigne les deux joueurs.', 'error'); return; }
+  const payload = { tableau, tour, player1: p1, player2: p2, order_num, deadline: deadlineVal ? new Date(deadlineVal).toISOString() : null };
+  const { error } = await sb.from('matches').insert(payload);
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  showToast('Match ajouté ✓');
+  document.getElementById('adm-p1').value = '';
+  document.getElementById('adm-p2').value = '';
+  document.getElementById('adm-order').value = (order_num + 1);
+  if (document.getElementById('adm-res-tour').value === tour && document.getElementById('adm-res-tableau').value === tableau) loadAdminMatches();
+}
+
+async function loadAdminMatches() {
+  const tableau = document.getElementById('adm-res-tableau').value;
+  const tour = document.getElementById('adm-res-tour').value;
+  const el = document.getElementById('adm-matches-list');
+  el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:1rem">Chargement...</div>';
+  const { data: matches, error } = await sb.from('matches').select('*').eq('tableau', tableau).eq('tour', tour).order('order_num', { ascending: true });
+  if (error) { el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:1rem">Table "matches" introuvable — exécute d\'abord la migration SQL.</div>'; return; }
+  if (!matches || !matches.length) { el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:1rem">Aucun match pour cette sélection.</div>'; return; }
+  const roundCfg = ROUNDS.find(r => r.key === tour);
+  const g = tableau.toLowerCase();
+  let html = '';
+  matches.forEach(m => {
+    const safe1 = m.player1.replace(/'/g, "\\'");
+    const safe2 = m.player2.replace(/'/g, "\\'");
+    html += `<div class="match-card mc-${g}" style="margin-bottom:12px">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:6px">Match #${m.order_num}</div>
+      <div class="match-players">
+        <button class="match-player-btn ${m.winner===m.player1?'selected sel-'+g:''}" onclick="adminSetWinner('${m.id}','${safe1}')">${m.player1}</button>
+        <div class="match-vs">VS</div>
+        <button class="match-player-btn ${m.winner===m.player2?'selected sel-'+g:''}" onclick="adminSetWinner('${m.id}','${safe2}')">${m.player2}</button>
+      </div>
+      ${roundCfg.sets ? `<div class="sets-row"><select onchange="adminSetSets('${m.id}', this.value)">
+        <option value="">Score en sets...</option>
+        ${(tableau==='H'?['3-0','3-1','3-2']:['2-0','2-1']).map(o=>`<option value="${o}" ${m.sets===o?'selected':''}>${o}</option>`).join('')}
+      </select></div>` : ''}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="adminDeleteMatch('${m.id}')">🗑 Supprimer</button>
+        <span style="font-size:12px;color:${m.winner?'var(--green3)':'var(--text3)'}">${m.winner ? '✓ Résultat enregistré' : 'En attente'}</span>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+async function adminSetWinner(matchId, winner) {
+  const { error } = await sb.from('matches').update({ winner, locked: true }).eq('id', matchId);
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  showToast('Vainqueur enregistré ✓');
+  await loadAdminMatches();
+  await recomputeRanking();
+}
+
+async function adminSetSets(matchId, val) {
+  if (!val) return;
+  const { error } = await sb.from('matches').update({ sets: val }).eq('id', matchId);
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  showToast('Score enregistré ✓');
+  await recomputeRanking();
+}
+
+async function adminDeleteMatch(matchId) {
+  if (!confirm('Supprimer ce match ? Les pronostics associés seront aussi supprimés.')) return;
+  const { error } = await sb.from('matches').delete().eq('id', matchId);
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  showToast('Match supprimé');
+  loadAdminMatches();
+}
+
+async function recomputeRanking(manual) {
+  const { data: matches } = await sb.from('matches').select('id,tableau,tour,winner,sets').not('winner', 'is', null);
+  const { data: pronos } = await sb.from('pronos').select('pseudo,match_id,winner,sets');
+  const { data: players } = await sb.from('players').select('pseudo');
+  if (!matches || !pronos || !players) { if (manual) showToast('Impossible de recalculer le classement.', 'error'); return; }
+
+  const matchMap = {};
+  matches.forEach(m => matchMap[m.id] = m);
+
+  const totals = {};
+  players.forEach(p => totals[p.pseudo] = { points_h: 0, exact_h: 0, points_f: 0, exact_f: 0 });
+
+  pronos.forEach(p => {
+    const m = matchMap[p.match_id];
+    if (!m) return;
+    const cfg = ROUNDS.find(r => r.key === m.tour);
+    if (!cfg) return;
+    if (!totals[p.pseudo]) totals[p.pseudo] = { points_h: 0, exact_h: 0, points_f: 0, exact_f: 0 };
+    let pts = 0, exact = 0;
+    if (p.winner === m.winner) {
+      pts += cfg.points;
+      if (cfg.sets && m.sets && p.sets === m.sets) { pts += cfg.setsBonus; exact = 1; }
+    }
+    if (m.tableau === 'H') { totals[p.pseudo].points_h += pts; totals[p.pseudo].exact_h += exact; }
+    else { totals[p.pseudo].points_f += pts; totals[p.pseudo].exact_f += exact; }
+  });
+
+  const rows = Object.keys(totals).map(pseudo => {
+    const t = totals[pseudo];
+    return { pseudo, points_h: t.points_h, exact_h: t.exact_h, points_f: t.points_f, exact_f: t.exact_f, points_total: t.points_h + t.points_f, exact_total: t.exact_h + t.exact_f };
+  });
+
+  const rankBy = (key) => {
+    const sorted = [...rows].sort((a, b) => b[key] - a[key]);
+    const posMap = {};
+    sorted.forEach((r, i) => posMap[r.pseudo] = i + 1);
+    return posMap;
+  };
+  const posH = rankBy('points_h'), posF = rankBy('points_f'), posT = rankBy('points_total');
+
+  const upserts = rows.map(r => ({
+    pseudo: r.pseudo,
+    points_h: r.points_h, exact_h: r.exact_h, position_h: posH[r.pseudo],
+    points_f: r.points_f, exact_f: r.exact_f, position_f: posF[r.pseudo],
+    points_total: r.points_total, exact_total: r.exact_total, position_total: posT[r.pseudo]
+  }));
+
+  const { error } = await sb.from('ranking_snapshots').upsert(upserts, { onConflict: 'pseudo' });
+  if (error) { console.error(error); if (manual) showToast('Erreur recalcul : ' + error.message, 'error'); return; }
+  if (manual) showToast('Classement recalculé ✓');
 }
 
 // ── Navigation ──
@@ -637,6 +1079,8 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
     const page = btn.dataset.page;
     document.getElementById('page-'+page).classList.add('active');
     if (page === 'classement') loadRanking();
+    if (page === 'pronostics') loadMatches(currentTour);
+    if (page === 'admin') { initAdminSelects(); renderAdminQualifies(); loadAdminMatches(); }
   });
 });
 
