@@ -32,7 +32,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: var(--dark);
+  background-color: var(--dark);
+  background-image:
+    linear-gradient(rgba(26,15,10,0.55), rgba(26,15,10,0.72)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23A8501F'/%3E%3Crect width='800' height='450' fill='%23000000' fill-opacity='0.06'/%3E%3Crect x='40' y='40' width='720' height='370' fill='none' stroke='%23F5E6D3' stroke-width='4' stroke-opacity='0.85'/%3E%3Crect x='90' y='40' width='620' height='370' fill='none' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3Cline x1='40' y1='225' x2='760' y2='225' stroke='%23F5E6D3' stroke-width='5' stroke-opacity='0.9'/%3E%3Cline x1='90' y1='115' x2='710' y2='115' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3Cline x1='90' y1='335' x2='710' y2='335' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3Cline x1='400' y1='115' x2='400' y2='335' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3Cline x1='400' y1='40' x2='400' y2='58' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3Cline x1='400' y1='392' x2='400' y2='410' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.8'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   min-height: 100vh;
@@ -481,12 +488,18 @@ nav {
       <button class="auth-tab" onclick="switchAuthTab('register',this)">S'inscrire</button>
     </div>
     <div id="auth-login">
-      <input class="auth-input" id="login-pseudo" type="text" placeholder="Prénom NOM" autocomplete="username">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <input class="auth-input" id="login-prenom" type="text" placeholder="Prénom" autocomplete="given-name">
+        <input class="auth-input" id="login-nom" type="text" placeholder="Nom" autocomplete="family-name">
+      </div>
       <input class="auth-input" id="login-pw" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
       <button class="auth-btn" onclick="doLogin()">Se connecter</button>
     </div>
     <div id="auth-register" class="hidden">
-      <input class="auth-input" id="reg-pseudo" type="text" placeholder="Prénom NOM (ex: Marie DUPONT)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <input class="auth-input" id="reg-prenom" type="text" placeholder="Prénom">
+        <input class="auth-input" id="reg-nom" type="text" placeholder="Nom">
+      </div>
       <input class="auth-input" id="reg-pw" type="password" placeholder="Mot de passe (min. 6 caractères)">
       <input class="auth-input" id="reg-pw2" type="password" placeholder="Confirmer le mot de passe" onkeydown="if(event.key==='Enter')doRegister()">
       <button class="auth-btn" onclick="doRegister()">Créer mon compte</button>
@@ -714,25 +727,36 @@ function switchAuthTab(tab, btn) {
   document.getElementById('auth-register').classList.toggle('hidden', tab !== 'register');
   document.getElementById('auth-msg').textContent = '';
 }
+function formatPseudo(prenom, nom) {
+  const p = prenom.trim();
+  const n = nom.trim();
+  if (!p || !n) return '';
+  const pCap = p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+  return `${pCap} ${n.toUpperCase()}`;
+}
 async function doLogin() {
-  const pseudo = document.getElementById('login-pseudo').value.trim();
+  const prenom = document.getElementById('login-prenom').value;
+  const nom = document.getElementById('login-nom').value;
   const pw = document.getElementById('login-pw').value;
+  const pseudo = formatPseudo(prenom, nom);
   if (!pseudo || !pw) { document.getElementById('auth-msg').textContent = 'Remplis tous les champs.'; return; }
   const hash = await hashPassword(pw);
   const { data } = await sb.from('players').select('pseudo,password_hash').eq('pseudo', pseudo).maybeSingle();
-  if (!data) { document.getElementById('auth-msg').textContent = 'Pseudo introuvable.'; return; }
+  if (!data) { document.getElementById('auth-msg').textContent = 'Prénom / Nom introuvable.'; return; }
   if (data.password_hash !== hash) { document.getElementById('auth-msg').textContent = 'Mot de passe incorrect.'; return; }
   await onLoginSuccess(pseudo);
 }
 async function doRegister() {
-  const pseudo = document.getElementById('reg-pseudo').value.trim();
+  const prenom = document.getElementById('reg-prenom').value;
+  const nom = document.getElementById('reg-nom').value;
   const pw = document.getElementById('reg-pw').value;
   const pw2 = document.getElementById('reg-pw2').value;
+  const pseudo = formatPseudo(prenom, nom);
   if (!pseudo || !pw) { document.getElementById('auth-msg').textContent = 'Remplis tous les champs.'; return; }
   if (pw !== pw2) { document.getElementById('auth-msg').textContent = 'Les mots de passe ne correspondent pas.'; return; }
   if (pw.length < 6) { document.getElementById('auth-msg').textContent = 'Minimum 6 caractères.'; return; }
   const { data: existing } = await sb.from('players').select('pseudo').eq('pseudo', pseudo).maybeSingle();
-  if (existing) { document.getElementById('auth-msg').textContent = 'Ce pseudo est déjà pris.'; return; }
+  if (existing) { document.getElementById('auth-msg').textContent = 'Ce compte existe déjà.'; return; }
   const hash = await hashPassword(pw);
   const { error } = await sb.from('players').insert({ pseudo, password_hash: hash });
   if (error) { document.getElementById('auth-msg').textContent = 'Erreur : ' + error.message; return; }
