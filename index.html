@@ -112,7 +112,7 @@ body {
 
 /* ── HERO ── */
 .hero {
-  background: linear-gradient(160deg, #1A0F0A 0%, #2C1810 40%, #1B3A1B 100%);
+  background: linear-gradient(160deg, #5C2610 0%, #8C4118 40%, #C2622D 100%);
   position: relative;
   overflow: hidden;
   padding: 0;
@@ -122,16 +122,25 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C2622D' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F5E6D3' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Crect x='40' y='40' width='720' height='370' fill='none' stroke='%23F5E6D3' stroke-width='4' stroke-opacity='0.18'/%3E%3Crect x='90' y='40' width='620' height='370' fill='none' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.16'/%3E%3Cline x1='40' y1='225' x2='760' y2='225' stroke='%23F5E6D3' stroke-width='5' stroke-opacity='0.2'/%3E%3Cline x1='90' y1='115' x2='710' y2='115' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.16'/%3E%3Cline x1='90' y1='335' x2='710' y2='335' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.16'/%3E%3Cline x1='400' y1='115' x2='400' y2='335' stroke='%23F5E6D3' stroke-width='3' stroke-opacity='0.16'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
   pointer-events: none;
 }
 .hero-inner { position: relative; z-index: 2; padding: 2rem 1rem 1.5rem; }
 .hero-badge {
   display: inline-block;
-  background: linear-gradient(90deg, var(--clay), var(--clay3));
-  color: white;
+  background: linear-gradient(90deg, var(--gold), #E8C376);
+  color: var(--dark);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   padding: 5px 16px;
@@ -145,36 +154,37 @@ body {
   line-height: 1;
   color: var(--sand);
   margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
 }
-.hero-title span { color: var(--clay3); }
+.hero-title span { color: var(--gold); }
 .hero-sub {
   font-size: 14px;
-  color: var(--text3);
+  color: var(--sand2);
   letter-spacing: 1px;
   margin-bottom: 1.5rem;
 }
 .hero-stats {
   display: flex;
   justify-content: center;
-  border-top: 1px solid rgba(194,98,45,0.2);
+  border-top: 1px solid rgba(245,230,211,0.2);
   margin-top: 1rem;
 }
 .hero-stat {
   flex: 1; text-align: center;
   padding: 1rem;
-  border-right: 1px solid rgba(194,98,45,0.2);
+  border-right: 1px solid rgba(245,230,211,0.2);
 }
 .hero-stat:last-child { border-right: none; }
 .hero-stat strong {
   display: block;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
-  color: var(--clay3);
+  color: var(--gold);
   line-height: 1;
 }
 .hero-stat span {
   font-size: 11px;
-  color: var(--text3);
+  color: var(--sand2);
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -406,6 +416,22 @@ nav {
 }
 .tableau-label.lbl-h { background: rgba(27,94,32,0.25); color: var(--green3); border: 1px solid var(--green); }
 .tableau-label.lbl-f { background: rgba(247,247,242,0.1); color: var(--white); border: 1px solid var(--white); }
+
+/* ── GROUPES DE CLÔTURE + COMPTE À REBOURS ── */
+.deadline-group { margin-bottom: 1.75rem; }
+.deadline-header {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(194,98,45,0.12);
+  border: 1px solid var(--clay);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.deadline-header .dl-label { font-size: 12px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; }
+.countdown-timer { font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: 1.5px; color: var(--gold); }
+.deadline-group.deadline-passed .deadline-header { border-color: var(--red); background: rgba(229,57,53,0.1); }
+.deadline-group.deadline-passed .countdown-timer { color: var(--red); }
 
 .match-card {
   background: var(--dark2);
@@ -842,6 +868,8 @@ async function loadRanking() {
 }
 
 // ── Pronostics ──
+let pronoCountdownInterval = null;
+
 function renderTourTabs() {
   const el = document.getElementById('prono-tabs');
   el.innerHTML = '<div id="tour-tabs">' + ROUNDS.map(r =>
@@ -868,15 +896,47 @@ async function loadMatches(tour) {
   (pronos || []).forEach(p => myPronos[p.match_id] = p);
 
   renderPronoContent(matches || []);
+  startCountdownTicker();
 }
 
 function renderPronoContent(matches) {
   const el = document.getElementById('prono-content');
   const roundCfg = ROUNDS.find(r => r.key === currentTour);
-  const mH = matches.filter(m => m.tableau === 'H');
-  const mF = matches.filter(m => m.tableau === 'F');
-  let html = renderTableauBlock('h', 'Tableau Hommes', mH, roundCfg) + renderTableauBlock('f', 'Tableau Femmes', mF, roundCfg);
-  el.innerHTML = html || '<div class="card" style="text-align:center;color:var(--text3)">Aucun match pour ce tour pour l\'instant.</div>';
+
+  if (!matches.length) {
+    el.innerHTML = '<div class="card" style="text-align:center;color:var(--text3)">Aucun match pour ce tour pour l\'instant.</div>';
+    return;
+  }
+
+  // Regroupe tous les matchs (Hommes + Femmes) qui partagent la même heure de clôture
+  const groups = {};
+  const order = [];
+  matches.forEach(m => {
+    const key = m.deadline || '__none__';
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(m);
+  });
+  order.sort((a, b) => {
+    if (a === '__none__') return 1;
+    if (b === '__none__') return -1;
+    return new Date(a) - new Date(b);
+  });
+
+  let html = '';
+  order.forEach(key => {
+    const groupMatches = groups[key];
+    const hasDeadline = key !== '__none__';
+    html += `<div class="deadline-group">
+      <div class="deadline-header">
+        <span class="dl-label">${hasDeadline ? 'Clôture des pronostics' : 'Date limite non définie'}</span>
+        ${hasDeadline ? `<span class="countdown-timer" data-deadline="${key}">${formatCountdown(key)}</span>` : ''}
+      </div>
+      ${renderTableauBlock('h', 'Tableau Hommes', groupMatches.filter(m => m.tableau === 'H'), roundCfg)}
+      ${renderTableauBlock('f', 'Tableau Femmes', groupMatches.filter(m => m.tableau === 'F'), roundCfg)}
+    </div>`;
+  });
+
+  el.innerHTML = html;
 }
 
 function renderTableauBlock(gender, label, matches, roundCfg) {
@@ -887,7 +947,8 @@ function renderTableauBlock(gender, label, matches, roundCfg) {
     const p1Ready = m.player1 !== PLACEHOLDER;
     const p2Ready = m.player2 !== PLACEHOLDER;
     const bothReady = p1Ready && p2Ready;
-    const locked = m.locked || !bothReady || (m.deadline && new Date(m.deadline) < new Date());
+    const deadlinePassed = m.deadline && new Date(m.deadline) < new Date();
+    const locked = m.locked || !bothReady || deadlinePassed;
     const safe1 = m.player1.replace(/'/g, "\\'");
     const safe2 = m.player2.replace(/'/g, "\\'");
     html += `<div class="match-card mc-${gender}${m.status==='forfait' ? ' mc-forfait' : ''}">
@@ -897,11 +958,47 @@ function renderTableauBlock(gender, label, matches, roundCfg) {
         <button class="match-player-btn ${p && p.winner===m.player2 ? 'selected sel-'+gender : ''}" ${locked?'disabled':''} onclick="selectWinner('${m.id}','${safe2}')">${p2Ready ? m.player2 : '⏳ à venir'}</button>
       </div>
       ${roundCfg && roundCfg.sets ? renderSetsRow(m, gender, p, locked) : ''}
-      <div class="match-meta">${m.status==='forfait' ? '🚫 Forfait — match annulé, aucun point attribué' : (!bothReady ? '⏳ En attente des qualifié(e)s du tour précédent' : (locked ? '🔒 Verrouillé' : (m.deadline ? '⏳ avant ' + new Date(m.deadline).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '')))}</div>
+      <div class="match-meta">${m.status==='forfait' ? '🚫 Forfait — match annulé, aucun point attribué' : (!bothReady ? '⏳ En attente des qualifié(e)s du tour précédent' : (m.locked && !deadlinePassed ? "🔒 Verrouillé par l'administrateur" : ''))}</div>
     </div>`;
   });
   html += '</div>';
   return html;
+}
+
+function formatCountdown(deadlineIso) {
+  const diff = new Date(deadlineIso).getTime() - Date.now();
+  if (diff <= 0) return '🔒 Clôturé';
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  const parts = [];
+  if (days) parts.push(days + 'j');
+  parts.push(String(hours).padStart(2, '0') + 'h');
+  parts.push(String(mins).padStart(2, '0') + 'm');
+  parts.push(String(secs).padStart(2, '0') + 's');
+  return parts.join(' ');
+}
+
+function startCountdownTicker() {
+  if (pronoCountdownInterval) clearInterval(pronoCountdownInterval);
+  pronoCountdownInterval = setInterval(() => {
+    document.querySelectorAll('.countdown-timer').forEach(elm => {
+      const dl = elm.dataset.deadline;
+      const text = formatCountdown(dl);
+      elm.textContent = text;
+      const group = elm.closest('.deadline-group');
+      if (text === '🔒 Clôturé' && group && !group.classList.contains('deadline-passed')) {
+        group.classList.add('deadline-passed');
+        group.querySelectorAll('.match-player-btn, .sets-row select').forEach(b => b.disabled = true);
+      }
+    });
+  }, 1000);
+}
+
+function stopCountdownTicker() {
+  if (pronoCountdownInterval) { clearInterval(pronoCountdownInterval); pronoCountdownInterval = null; }
 }
 
 function renderSetsRow(m, gender, p, locked) {
@@ -1199,7 +1296,7 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
     const page = btn.dataset.page;
     document.getElementById('page-'+page).classList.add('active');
     if (page === 'classement') loadRanking();
-    if (page === 'pronostics') loadMatches(currentTour);
+    if (page === 'pronostics') loadMatches(currentTour); else stopCountdownTicker();
     if (page === 'admin') { initAdminSelects(); renderAdminQualifies(); loadAdminMatches(); }
   });
 });
