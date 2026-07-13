@@ -414,6 +414,7 @@ const ADMIN_PSEUDO = 'Admin CSE';
   <!-- PRONOSTICS -->
   <div id="page-pronostics" class="page">
     <div class="tab-sub" id="prono-tabs"></div>
+    <div class="tab-sub" id="prono-round-tabs" style="margin-top:8px"></div>
     <div id="prono-content"></div>
   </div>
 
@@ -783,7 +784,7 @@ async function hashPassword(password) {
 // ── State ──────────────────────────────────────────────────────────────────
 let currentPseudo = null;
 let myPronos = {}, allResults = {}, specialResults = {}, mySpecial = {};
-let currentPronoTab = 'specials', saveTimers = {};
+let currentPronoScope = 'specials', currentPronoRound = null, saveTimers = {}, roundCountdownTimer = null;
 
 // ── Utility ────────────────────────────────────────────────────────────────
 function showToast(msg, type='') {
@@ -861,7 +862,7 @@ async function doLogin() {
   if (!prenom) { showAuthError('login-pseudo-err','Saisis ton prénom'); document.getElementById('login-prenom').classList.add('error'); return; }
   if (!nom)    { showAuthError('login-pseudo-err','Saisis ton nom'); document.getElementById('login-nom').classList.add('error'); return; }
   if (!pw)     { showAuthError('login-pw-err','Saisis ton mot de passe'); document.getElementById('login-pw').classList.add('error'); return; }
-  const pseudo = prenom.charAt(0).toUpperCase() + prenom.slice(1).toLowerCase() + ' ' + nom.toUpperCase();
+  const pseudo = toTitleCase(prenom) + ' ' + nom.toUpperCase();
   const btn = document.getElementById('login-btn');
   btn.innerHTML = '<span class="spinner"></span>Connexion...'; btn.disabled = true;
   try {
@@ -884,7 +885,7 @@ async function doRegister() {
   let ok = true;
   if (!prenom || prenom.length < 2) { showAuthError('reg-pseudo-err','Prénom trop court (min. 2 caractères)'); document.getElementById('reg-prenom').classList.add('error'); ok=false; }
   if (!nom || nom.length < 2) { showAuthError('reg-pseudo-err','Nom trop court (min. 2 caractères)'); document.getElementById('reg-nom').classList.add('error'); ok=false; }
-  const pseudo = prenom.charAt(0).toUpperCase() + prenom.slice(1).toLowerCase() + ' ' + nom.toUpperCase();
+  const pseudo = toTitleCase(prenom) + ' ' + nom.toUpperCase();
   if (!pw || pw.length < 6)         { showAuthError('reg-pw-err','Min. 6 caractères'); document.getElementById('reg-pw').classList.add('error'); ok=false; }
   if (pw !== pw2)                   { showAuthError('reg-pw2-err','Les mots de passe ne correspondent pas'); document.getElementById('reg-pw2').classList.add('error'); ok=false; }
   if (!ok) return;
@@ -1260,7 +1261,8 @@ function goToPronoTab(draw, phase) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelector('[data-page="pronostics"]').classList.add('active');
   document.getElementById('page-pronostics').classList.add('active');
-  currentPronoTab = draw + '|' + phase;
+  currentPronoScope = draw;
+  currentPronoRound = phase;
   renderPronostics();
 }
 
@@ -1300,21 +1302,33 @@ function goToPage(page) {
 
 // ── Pronostics ─────────────────────────────────────────────────────────────
 function renderPronostics() {
-  let html = `<button class="${currentPronoTab==='specials'?'active':''}" onclick="switchPronoTab('specials',this)">🎯 Spéciaux</button>`;
-  DRAWS.forEach(draw => {
-    ROUNDS.forEach(round => {
-      const key = draw + '|' + round;
-      html += `<button class="${key===currentPronoTab?'active':''}" onclick="switchPronoTab('${key}',this)">${draw==='H'?'♂':'♀'} ${ROUND_SHORT[round]}</button>`;
-    });
-  });
-  document.getElementById('prono-tabs').innerHTML = html;
-  renderPronoContent(currentPronoTab);
+  const mainHtml = `
+    <button class="${currentPronoScope==='specials'?'active':''}" onclick="switchPronoScope('specials')">🎯 Spéciaux</button>
+    <button class="${currentPronoScope==='H'?'active':''}" onclick="switchPronoScope('H')">🎾 Tableau Hommes</button>
+    <button class="${currentPronoScope==='D'?'active':''}" onclick="switchPronoScope('D')">🎾 Tableau Femmes</button>`;
+  document.getElementById('prono-tabs').innerHTML = mainHtml;
+
+  const roundEl = document.getElementById('prono-round-tabs');
+  if (currentPronoScope === 'specials') {
+    roundEl.style.display = 'none';
+    roundEl.innerHTML = '';
+  } else {
+    if (!currentPronoRound) currentPronoRound = ROUNDS[0];
+    roundEl.style.display = '';
+    roundEl.innerHTML = ROUNDS.map(r =>
+      `<button class="${r===currentPronoRound?'active':''}" onclick="switchPronoRound('${r}')">${ROUND_SHORT[r]}</button>`
+    ).join('');
+  }
+  renderPronoContent();
 }
-function switchPronoTab(tab, btn) {
-  currentPronoTab=tab;
-  document.querySelectorAll('#prono-tabs button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderPronoContent(tab);
+function switchPronoScope(scope) {
+  currentPronoScope = scope;
+  if (scope !== 'specials' && !currentPronoRound) currentPronoRound = ROUNDS[0];
+  renderPronostics();
+}
+function switchPronoRound(round) {
+  currentPronoRound = round;
+  renderPronostics();
 }
 function updatePronoBadge() {}
 
@@ -1404,48 +1418,58 @@ function matchRow(m) {
     <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${flagFor(m.home)}${m.home}</button>
     <div class="vs">VS</div>
     <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${flagFor(m.away)}${m.away}</button>
-    <div class="match-date" id="pst-${m.id}"><span class="countdown" data-deadline="${new Date(m.deadline).getTime()}"></span><br><span style="color:var(--text);font-size:13px">${new Date(m.deadline).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} à ${new Date(m.deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></div>
     ${scoreRow}
   </div>`;
 }
 
-function renderPronoContent(tab) {
+function renderPronoContent() {
   setTimeout(startCountdowns, 50);
   const c = document.getElementById('prono-content');
-  if (tab==='specials') { renderSpecials(c); setTimeout(startMainCountdown, 50); return; }
-  const [draw, phase] = tab.split('|');
+  if (currentPronoScope==='specials') { renderSpecials(c); setTimeout(startMainCountdown, 50); return; }
+  const draw = currentPronoScope, phase = currentPronoRound;
   const ms = ALL_MATCHES.filter(m=>m.draw===draw && m.phase===phase).sort((a,b)=>a.id-b.id);
   if (!ms.length) { c.innerHTML='<div class="form-card"><p style="color:var(--text2);font-size:16px">Ces matchs seront disponibles après le tour précédent.</p></div>'; return; }
 
-  // Grouper par jour
-  const byDay = {};
-  ms.forEach(m => {
-    const d = new Date(m.deadline);
-    const key = d.toLocaleDateString('fr-FR', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
-    if (!byDay[key]) byDay[key] = [];
-    byDay[key].push(m);
-  });
+  // Tous les matchs d'un même tour (pour un tableau donné) partagent la même heure de clôture
+  const dl = new Date(ms[0].deadline).getTime();
+  const dateStr = new Date(ms[0].deadline).toLocaleDateString('fr-FR', {weekday:'long', day:'2-digit', month:'long', year:'numeric'})
+    + ' à ' + new Date(ms[0].deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const dateLabel = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
   let html = `<div class="section-title" style="font-size:1.1rem">${draw==='H'?'🎾 Simple Messieurs':'🎾 Simple Dames'} — ${phase}</div>`;
-  Object.entries(byDay).forEach(([day, matches]) => {
-    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
-    html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);padding:10px 0 6px;margin-top:8px;border-bottom:1px solid rgba(255,255,255,0.3);margin-bottom:8px">📅 ${dayLabel}</div>`;
-    html += '<div class="form-card" style="margin-bottom:12px">';
-    matches.forEach((m, idx) => {
-      if (idx > 0) html += matchSeparator();
-      html += matchRow(m);
-    });
-    html += '</div>';
+  html += `<div class="form-card" style="text-align:center;margin-bottom:1rem">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--text3);margin-bottom:12px">⏱ CLÔTURE DE CE TOUR</div>
+    <div id="round-countdown-display" style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap"></div>
+    <div style="font-size:13px;color:var(--text);margin-top:12px">${dateLabel}</div>
+  </div>`;
+  html += '<div class="form-card">';
+  ms.forEach((m, idx) => {
+    if (idx > 0) html += matchSeparator();
+    html += matchRow(m);
   });
+  html += '</div>';
 
   c.innerHTML = html;
+  setTimeout(() => startRoundCountdown(dl), 50);
+}
+function startRoundCountdown(deadlineMs) {
+  if (roundCountdownTimer) clearInterval(roundCountdownTimer);
+  function tick() {
+    const el = document.getElementById('round-countdown-display');
+    if (!el) { clearInterval(roundCountdownTimer); return; }
+    const diff = deadlineMs - Date.now();
+    if (diff <= 0) { el.innerHTML = '<span style="color:var(--red);font-size:1.2rem;letter-spacing:2px">Tour verrouillé</span>'; clearInterval(roundCountdownTimer); return; }
+    el.innerHTML = formatCountdown(diff);
+  }
+  tick();
+  roundCountdownTimer = setInterval(tick, 1000);
 }
 function pickWinner(matchId, side) {
   const match = ALL_MATCHES.find(m=>m.id===matchId);
   if (match && isLocked(match)) { showToast('⛔ Ce pronostic est verrouillé', 'error'); return; }
   const prevScore = (myPronos[matchId]||{}).score || '';
   myPronos[matchId] = { winner: side, score: prevScore };
-  renderPronoContent(currentPronoTab);
+  renderPronoContent();
   clearTimeout(saveTimers[matchId]);
   saveTimers[matchId] = setTimeout(async()=>{
     await upsertProno(matchId);
@@ -1813,6 +1837,13 @@ async function saveDeadlines() {
 }
 
 // ── Admin : joueurs (1er tour) et qualifiés (tours suivants) ───────────────
+// Met en forme "jean-marc DUPONT" → "Jean-Marc Dupont" (1ère lettre de chaque mot en majuscule, le reste en minuscule)
+function toTitleCase(str) {
+  if (!str) return str;
+  return str.trim().replace(/\s+/g,' ').split(' ').map(word =>
+    word.split('-').map(part => part ? part.charAt(0).toUpperCase() + part.slice(1).toLowerCase() : part).join('-')
+  ).join(' ');
+}
 function bulkImportRound1(draw) {
   const ta = document.getElementById('bulk-import-'+draw);
   const lines = ta.value.split('\n').map(s=>s.trim()).filter(Boolean);
@@ -1823,7 +1854,7 @@ function bulkImportRound1(draw) {
     const slot = i+1;
     const [rawName, rawCode] = lines[i].split(';').map(s=>s?s.trim():'');
     const el = document.getElementById('ko-name-'+draw+slot);
-    if (el) { el.value = rawName; count++; }
+    if (el) { el.value = toTitleCase(rawName); count++; }
     if (rawCode) {
       const code = rawCode.toUpperCase();
       const natEl = document.getElementById('ko-nation-'+draw+slot);
@@ -1881,7 +1912,7 @@ async function saveKoNames() {
         const slot = slotBase + i;
         const el = document.getElementById('ko-name-'+draw+slot);
         if (!el) continue;
-        const val = el.value.trim();
+        const val = toTitleCase(el.value.trim());
         if (val) newNames[draw+slot] = val;
         if (ri === 0) {
           const natEl = document.getElementById('ko-nation-'+draw+slot);
