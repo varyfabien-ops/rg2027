@@ -1111,9 +1111,23 @@ async function upsertSpecial() {
 
 // ── Comptes à rebours ─────────────────────────────────────────────────────
 function cdColor(d,h,m) {
-  if (d >= 3) return 'var(--green)';
+  if (d >= 3) return '#0B5C3A'; // même vert que le bandeau du haut (hero)
   if (d >= 1) return '#f97316';
   return 'var(--red)';
+}
+// Rendu unique et partagé des "gros" compte à rebours (Spéciaux, tours de pronostics).
+function bigCountdownHTML(diff) {
+  if (diff <= 0) return null;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const col = cdColor(d,h,m);
+  const unit = (val, label) => `<div style="min-width:64px;text-align:center">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:${col};line-height:1">${String(val).padStart(2,'0')}</div>
+    <div style="font-size:12px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:2px">${label}</div>
+  </div>`;
+  return unit(d,'jours') + unit(h,'heures') + unit(m,'minutes') + unit(s,'secondes');
 }
 function formatCountdown(ms) {
   if (ms <= 0) return '<span style="color:var(--red)">Clôturé</span>';
@@ -1402,15 +1416,17 @@ function matchRow(m) {
       <div class="match-date" style="display:flex;flex-direction:column;align-items:center;gap:2px">${resDisplay}${badge}</div>
     </div>`;
   }
-  let scoreRow = '';
   if (exactRound) {
-    const options = VALID_SCORES[m.draw] || [];
-    scoreRow = `<div style="grid-column:1/-1;margin-top:8px">
-      <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:3px">🎯 Score exact en sets (${m.draw==='H'?'3 sets gagnants':'2 sets gagnants'})</label>
-      <select class="form-input" style="font-size:14px;padding:8px" onchange="pickScore(${m.id}, this.value)">
-        <option value="">-- Choisir le score --</option>
-        ${options.map(o=>`<option value="${o}"${pred.score===o?' selected':''}>${o}</option>`).join('')}
-      </select>
+    const winSets = m.draw === 'H' ? 3 : 2;
+    const sets = scoreToSets(pred, m.draw);
+    return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
+      ${gl}
+      <div class="team-name left">${flagFor(m.home)}${m.home}</div>
+      <input class="score-input" type="number" min="0" max="${winSets}" placeholder="–" value="${sets.home}" oninput="updateSetScore(${m.id},'home',this.value)">
+      <div class="vs">–</div>
+      <input class="score-input" type="number" min="0" max="${winSets}" placeholder="–" value="${sets.away}" oninput="updateSetScore(${m.id},'away',this.value)">
+      <div class="team-name right">${flagFor(m.away)}${m.away}</div>
+      <div class="match-date" style="grid-column:1/-1;font-size:12px;color:var(--text3);text-align:center;margin-top:4px" id="sst-${m.id}">🎯 Score en sets (${m.draw==='H'?'3 sets gagnants':'2 sets gagnants'})${pred.winner?` — <span style="color:var(--green)">✓ ${flagFor(pred.winner==='home'?m.home:m.away)}${pred.winner==='home'?m.home:m.away} vainqueur (${pred.score})</span>`:''}</div>
     </div>`;
   }
   return `<div class="match-row picking" data-match-id="${m.id}" style="padding-top:2px">
@@ -1418,7 +1434,6 @@ function matchRow(m) {
     <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${flagFor(m.home)}${m.home}</button>
     <div class="vs">VS</div>
     <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${flagFor(m.away)}${m.away}</button>
-    ${scoreRow}
   </div>`;
 }
 
@@ -1458,11 +1473,57 @@ function startRoundCountdown(deadlineMs) {
     const el = document.getElementById('round-countdown-display');
     if (!el) { clearInterval(roundCountdownTimer); return; }
     const diff = deadlineMs - Date.now();
-    if (diff <= 0) { el.innerHTML = '<span style="color:var(--red);font-size:1.2rem;letter-spacing:2px">Tour verrouillé</span>'; clearInterval(roundCountdownTimer); return; }
-    el.innerHTML = formatCountdown(diff);
+    const html = bigCountdownHTML(diff);
+    if (!html) { el.innerHTML = '<span style="color:var(--red);font-size:1.2rem;letter-spacing:2px">Tour verrouillé</span>'; clearInterval(roundCountdownTimer); return; }
+    el.innerHTML = html;
   }
   tick();
   roundCountdownTimer = setInterval(tick, 1000);
+}
+// Reconstruit les valeurs à afficher dans les 2 champs (sets du joueur A / sets du joueur B)
+// à partir du pronostic enregistré (winner + score "gagnant-perdant").
+function scoreToSets(pred, draw) {
+  if (!pred.winner || !pred.score) return { home:'', away:'' };
+  const [wSets, lSets] = pred.score.split('-');
+  return pred.winner === 'home' ? { home: wSets, away: lSets } : { home: lSets, away: wSets };
+}
+// Détermine le vainqueur + le score "gagnant-perdant" à partir des sets saisis pour chaque joueur.
+// Renvoie null tant que la saisie n'est pas un score de tennis valide (pas d'égalité, vainqueur à 3 (H) ou 2 (D) sets).
+function deriveSetResult(draw, homeVal, awayVal) {
+  const winSets = draw === 'H' ? 3 : 2;
+  const h = parseInt(homeVal, 10), a = parseInt(awayVal, 10);
+  if (isNaN(h) || isNaN(a)) return null;
+  if (h === a) return null;
+  if (Math.max(h,a) !== winSets) return null;
+  if (Math.min(h,a) < 0 || Math.min(h,a) >= winSets) return null;
+  const winner = h > a ? 'home' : 'away';
+  return { winner, score: `${winSets}-${Math.min(h,a)}` };
+}
+function updateSetScore(matchId, side, value) {
+  const match = ALL_MATCHES.find(m=>m.id===matchId);
+  if (match && isLocked(match)) { showToast('⛔ Ce pronostic est verrouillé', 'error'); return; }
+  if (!myPronos[matchId]) myPronos[matchId] = { winner:'', score:'' };
+  const cur = myPronos[matchId];
+  const sets = scoreToSets(cur, match.draw);
+  const homeVal = side==='home' ? value : sets.home;
+  const awayVal = side==='away' ? value : sets.away;
+  const result = deriveSetResult(match.draw, homeVal, awayVal);
+  const badgeEl = document.getElementById('sst-'+matchId);
+  if (result) {
+    cur.winner = result.winner;
+    cur.score = result.score;
+    const winnerName = result.winner==='home' ? match.home : match.away;
+    if (badgeEl) badgeEl.innerHTML = `🎯 Score en sets (${match.draw==='H'?'3 sets gagnants':'2 sets gagnants'}) — <span style="color:var(--green)">✓ ${flagFor(winnerName)}${winnerName} vainqueur (${result.score})</span>`;
+    clearTimeout(saveTimers[matchId]);
+    saveTimers[matchId] = setTimeout(async()=>{
+      await upsertProno(matchId);
+      updateDashboard();
+      showToast('✓ Score enregistré');
+    },400);
+  } else {
+    cur.winner = ''; cur.score = '';
+    if (badgeEl) badgeEl.innerHTML = `🎯 Score en sets (${match.draw==='H'?'3 sets gagnants — ex. 3-0, 3-1, 3-2':'2 sets gagnants — ex. 2-0, 2-1'})`;
+  }
 }
 function pickWinner(matchId, side) {
   const match = ALL_MATCHES.find(m=>m.id===matchId);
@@ -1475,18 +1536,6 @@ function pickWinner(matchId, side) {
     await upsertProno(matchId);
     updateDashboard();
     showToast('✓ Pronostic enregistré');
-  },300);
-}
-function pickScore(matchId, scoreStr) {
-  const match = ALL_MATCHES.find(m=>m.id===matchId);
-  if (match && isLocked(match)) { showToast('⛔ Ce pronostic est verrouillé', 'error'); return; }
-  if (!myPronos[matchId]) myPronos[matchId] = { winner:'', score:'' };
-  myPronos[matchId].score = scoreStr;
-  clearTimeout(saveTimers[matchId]);
-  saveTimers[matchId] = setTimeout(async()=>{
-    await upsertProno(matchId);
-    updateDashboard();
-    showToast('✓ Score enregistré');
   },300);
 }
 function renderSpecials(c) {
@@ -2163,29 +2212,13 @@ async function loadStats_page() {
 function startMainCountdown() {
   const target = new Date('2027-05-23T10:30:00');
   const el = document.getElementById('main-countdown-display');
-  const card = document.getElementById('main-countdown-card');
   if (!el) return;
 
-  function unit(val, label, col) {
-    return `<div style="min-width:64px;text-align:center">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:${col};line-height:1">${String(val).padStart(2,'0')}</div>
-      <div style="font-size:12px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:2px">${label}</div>
-    </div>`;
-  }
-
   function tick() {
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) {
-      if (el) el.innerHTML = '<span style="color:var(--red);font-size:1.2rem;letter-spacing:2px">Pronostics sp\u00e9ciaux verrouill\u00e9s</span>';
-      return;
-    }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    const col = d >= 3 ? 'var(--green)' : d >= 1 ? '#f97316' : 'var(--red)';
-    el.innerHTML = unit(d,'jours',col) + unit(h,'heures',col) + unit(m,'minutes',col) + unit(s,'secondes',col);
+    const diff = target - new Date();
+    const html = bigCountdownHTML(diff);
+    if (!html) { el.innerHTML = '<span style="color:var(--red);font-size:1.2rem;letter-spacing:2px">Pronostics spéciaux verrouillés</span>'; return; }
+    el.innerHTML = html;
   }
   tick();
   setInterval(tick, 1000);
