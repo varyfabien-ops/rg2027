@@ -14,35 +14,36 @@
   --maple:#e8472a;--clutch:#1a56db;--zayu:#16a34a;
   --text:#FEFCE8;--text2:#d1d5db;--text3:#9ca3af;
   --border:#6B3418;--border2:#7A3F1F;
+  --auth-bg:#06492D;--auth-bg2:#0B5C3A;--auth-accent:#BB5522;--auth-accent2:#D97340;
 }
 body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* ── AUTH OVERLAY ── */
 #auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
 #auth-overlay.hidden{display:none}
-.auth-box{background:var(--bg2);border:2px solid var(--gold);border-radius:16px;padding:2rem;width:100%;max-width:380px;position:relative}
+.auth-box{background:var(--auth-bg);border:2px solid var(--auth-accent);border-radius:16px;padding:2rem;width:100%;max-width:380px;position:relative}
 .auth-logo{text-align:center;margin-bottom:1.5rem}
-.auth-logo .badge{display:inline-block;background:var(--gold);color:#06492D;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;margin-bottom:10px}
+.auth-logo .badge{display:inline-block;background:var(--auth-accent);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;margin-bottom:10px}
 .auth-logo h1{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;line-height:1}
-.auth-logo h1 span{color:var(--gold)}
+.auth-logo h1 span{color:var(--auth-accent)}
 .auth-logo p{font-size:14px;color:var(--text3);margin-top:4px}
-.auth-tabs{display:flex;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:1.5rem;gap:3px}
+.auth-tabs{display:flex;background:var(--auth-bg2);border-radius:8px;padding:3px;margin-bottom:1.5rem;gap:3px}
 .auth-tab{flex:1;padding:8px;border:none;background:none;color:var(--text2);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:15px;font-weight:500;cursor:pointer;border-radius:6px;transition:all .2s}
-.auth-tab.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.4)}
+.auth-tab.active{background:var(--auth-bg);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.4)}
 .auth-form label{font-size:14px;color:var(--text2);margin-bottom:5px;display:block;font-weight:500;letter-spacing:0.3px}
 .auth-form .field{margin-bottom:12px}
-.auth-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;outline:none;transition:border .2s}
-.auth-input:focus{border-color:var(--gold)}
+.auth-input{width:100%;background:var(--auth-bg2);border:1px solid #145940;border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;outline:none;transition:border .2s}
+.auth-input:focus{border-color:var(--auth-accent)}
 .auth-input.error{border-color:var(--red)}
 .auth-error{font-size:14px;color:var(--red);margin-top:4px;display:none}
 .auth-error.show{display:block}
-.auth-btn{width:100%;padding:12px;background:var(--gold);color:#06492D;border:none;border-radius:8px;font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
-.auth-btn:hover{background:#ffd700}
+.auth-btn{width:100%;padding:12px;background:var(--auth-accent);color:#fff;border:none;border-radius:8px;font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+.auth-btn:hover{background:var(--auth-accent2)}
 .auth-btn:disabled{opacity:0.6;cursor:not-allowed}
 .auth-hint{font-size:14px;color:var(--text3);text-align:center;margin-top:14px;line-height:1.6}
 .pw-strength{height:3px;border-radius:2px;margin-top:5px;transition:all .3s;background:var(--border)}
 .pw-strength.weak{background:var(--red);width:33%}
-.pw-strength.medium{background:var(--gold);width:66%}
+.pw-strength.medium{background:var(--auth-accent);width:66%}
 .pw-strength.strong{background:var(--green);width:100%}
 
 /* ── USER PILL in nav ── */
@@ -505,7 +506,19 @@ const ADMIN_PSEUDO = 'Admin CSE';
       </div>
       <!-- Édition joueurs (1er tour) & qualifiés (tours suivants) -->
       <div id="admin-edit-ko" style="display:none">
-        <div class="info-box">Saisis les vrais noms des joueurs/joueuses du 1er tour, puis les qualifiés au fur et à mesure des tours. Ces noms remplacent les valeurs par défaut dans les pronostics et le classement de tous les participants.</div>
+        <div class="info-box">Saisis les vrais noms (et nationalités) des joueurs/joueuses du 1er tour, puis les qualifiés au fur et à mesure des tours. Ces informations remplacent les valeurs par défaut dans les pronostics et le classement de tous les participants.</div>
+
+        <div class="form-card" style="border-color:var(--gold)">
+          <div class="section-title" style="font-size:1rem">📋 Import rapide du 1er tour (tableau complet)</div>
+          <p style="font-size:14px;color:var(--text3);margin-bottom:10px">Colle la liste des 128 joueurs dans l'ordre du tableau (un par ligne). Format : <code>Nom du joueur;CODE</code> (ex : <code>Novak Djokovic;RS</code>) — le code pays est optionnel, sinon mets juste le nom. Les champs ci-dessous seront pré-remplis — vérifie puis clique "Enregistrer les joueurs" en bas de page.</p>
+          <label class="form-label">Simple Messieurs — 128 noms</label>
+          <textarea class="form-input" id="bulk-import-H" rows="4" placeholder="Joueur 1;FR&#10;Joueur 2;ES&#10;...&#10;Joueur 128;US" style="margin-bottom:8px;font-family:monospace;font-size:13px;resize:vertical"></textarea>
+          <button class="btn btn-outline btn-sm" onclick="bulkImportRound1('H')" style="margin-bottom:18px">⬇️ Importer Messieurs</button>
+          <label class="form-label">Simple Dames — 128 noms</label>
+          <textarea class="form-input" id="bulk-import-D" rows="4" placeholder="Joueuse 1;FR&#10;Joueuse 2;ES&#10;...&#10;Joueuse 128;US" style="margin-bottom:8px;font-family:monospace;font-size:13px;resize:vertical"></textarea>
+          <button class="btn btn-outline btn-sm" onclick="bulkImportRound1('D')">⬇️ Importer Dames</button>
+        </div>
+
         <div class="form-card">
           <div id="admin-ko-inputs"></div>
         </div>
@@ -611,8 +624,52 @@ function initConfetti() {}
 // ── Données tournoi (modifiables via l'admin) ─────────────────────────────
 // Roland-Garros 2027 : 2 tableaux (Messieurs / Dames), 128 joueurs, 7 tours,
 // pronostic = vainqueur du match uniquement (pas de score).
-function flag(team) { return ''; }
-function flagInline(team) { return ''; }
+// ── Nationalités & drapeaux ─────────────────────────────────────────────────
+// Génère l'emoji drapeau à partir d'un code pays ISO 3166-1 alpha-2 (ex: 'FR' → 🇫🇷)
+function codeToFlag(code) {
+  if (!code || code.length !== 2) return '';
+  const cc = code.toUpperCase();
+  return String.fromCodePoint(...[...cc].map(c => 0x1F1E6 + c.charCodeAt(0) - 65));
+}
+const COUNTRIES = [
+  ['FR','France'],['ES','Espagne'],['IT','Italie'],['DE','Allemagne'],['GB','Grande-Bretagne'],
+  ['US','États-Unis'],['CA','Canada'],['AU','Australie'],['NZ','Nouvelle-Zélande'],
+  ['AR','Argentine'],['BR','Brésil'],['CL','Chili'],['UY','Uruguay'],['CO','Colombie'],['PE','Pérou'],['EC','Équateur'],
+  ['RS','Serbie'],['HR','Croatie'],['BA','Bosnie-Herzégovine'],['SI','Slovénie'],['MK','Macédoine du Nord'],['ME','Monténégro'],
+  ['RU','Russie'],['BY','Biélorussie'],['UA','Ukraine'],['PL','Pologne'],['CZ','Tchéquie'],['SK','Slovaquie'],
+  ['HU','Hongrie'],['RO','Roumanie'],['BG','Bulgarie'],['GR','Grèce'],['TR','Turquie'],
+  ['NL','Pays-Bas'],['BE','Belgique'],['LU','Luxembourg'],['CH','Suisse'],['AT','Autriche'],
+  ['PT','Portugal'],['SE','Suède'],['NO','Norvège'],['DK','Danemark'],['FI','Finlande'],['IS','Islande'],
+  ['IE','Irlande'],['EE','Estonie'],['LV','Lettonie'],['LT','Lituanie'],
+  ['JP','Japon'],['CN','Chine'],['KR','Corée du Sud'],['TW','Taïwan'],['HK','Hong Kong'],['IN','Inde'],
+  ['ID','Indonésie'],['TH','Thaïlande'],['PH','Philippines'],['KZ','Kazakhstan'],['UZ','Ouzbékistan'],['GE','Géorgie'],
+  ['IL','Israël'],['EG','Égypte'],['MA','Maroc'],['TN','Tunisie'],['DZ','Algérie'],['ZA','Afrique du Sud'],
+  ['NG','Nigeria'],['KE','Kenya'],['SN','Sénégal'],['CI',"Côte d'Ivoire"],
+  ['MX','Mexique'],['CR','Costa Rica'],['CU','Cuba'],['DO','Rép. dominicaine'],['JM','Jamaïque'],
+  ['MC','Monaco'],['LI','Liechtenstein'],['MD','Moldavie'],['AL','Albanie'],['CY','Chypre'],['MT','Malte'],
+  ['SG','Singapour'],['VN','Vietnam'],['PK','Pakistan'],['QA','Qatar'],['AE','Émirats arabes unis'],['SA','Arabie Saoudite']
+].sort((a,b)=>a[1].localeCompare(b[1],'fr'));
+function countryOptions(selected) {
+  return '<option value="">-- Nationalité --</option>' + COUNTRIES.map(([code,name]) =>
+    `<option value="${code}"${selected===code?' selected':''}>${codeToFlag(code)} ${name}</option>`
+  ).join('');
+}
+// Associe chaque nom de joueur (saisi au 1er tour) à son drapeau, pour l'afficher
+// automatiquement partout où son nom apparaît, y compris après qualification.
+let NAME_TO_FLAG = {};
+function buildNameToFlag() {
+  NAME_TO_FLAG = {};
+  DRAWS.forEach(draw => {
+    for (let slot = 1; slot <= 128; slot++) {
+      const code = KO_NATIONS[draw+slot];
+      const name = KO_NAMES[draw+slot];
+      if (code && name) NAME_TO_FLAG[name] = codeToFlag(code);
+    }
+  });
+}
+function flagFor(name) { return NAME_TO_FLAG[name] ? NAME_TO_FLAG[name]+' ' : ''; }
+function flag(team) { return flagFor(team); }
+function flagInline(team) { return flagFor(team); }
 
 const DRAWS = ['H','D'];
 const DRAW_LABEL = { H:'Simple Messieurs', D:'Simple Dames' };
@@ -640,6 +697,8 @@ const ROUND_DEFAULT_DATE = {
 // Noms des joueurs (1er tour) puis des qualifiés (tours suivants), modifiables par l'admin.
 // Clé = draw + slot (ex: 'H1', 'D254')
 let KO_NAMES = {};
+// Nationalité des joueurs (uniquement pertinent pour les 128 slots du 1er tour). Clé = draw + slot.
+let KO_NATIONS = {};
 // Horaires de clôture par match, modifiables par l'admin. Clé = draw + '_' + matchId
 let KO_DEADLINES = {};
 
@@ -650,6 +709,7 @@ function defaultSlotName(draw, slot, roundIdx) {
 
 function buildMatches() {
   const m = []; let id = 1;
+
   DRAWS.forEach(draw => {
     let slotBase = 1;
     ROUNDS.forEach((round, ri) => {
@@ -658,7 +718,7 @@ function buildMatches() {
         const slotA = slotBase + i*2, slotB = slotA + 1;
         const nameA = KO_NAMES[draw+slotA] || defaultSlotName(draw, slotA, ri);
         const nameB = KO_NAMES[draw+slotB] || defaultSlotName(draw, slotB, ri);
-        const dlKey = draw + '_' + id;
+        const dlKey = draw + '_' + round;
         const dl = KO_DEADLINES[dlKey] || ROUND_DEFAULT_DATE[draw][round];
         m.push({ id: id, draw, home: nameA, away: nameB, phase: round, slotA, slotB, deadline: new Date(dl) });
         id++;
@@ -972,10 +1032,12 @@ async function loadAppConfig() {
   const { data } = await sb.from('app_config').select('*').eq('id',1).maybeSingle();
   if (data) {
     if (data.ko_names) KO_NAMES = Object.assign(KO_NAMES, data.ko_names);
+    if (data.ko_nations) KO_NATIONS = Object.assign(KO_NATIONS, data.ko_nations);
     if (data.ko_deadlines) KO_DEADLINES = Object.assign(KO_DEADLINES, data.ko_deadlines);
     appConfig = Object.assign(appConfig, data.config || {});
   }
   ALL_MATCHES = buildMatches();
+  buildNameToFlag();
   applyConfig();
 }
 function applyConfig() {
@@ -1146,7 +1208,7 @@ function renderNextMatch() {
   const countdown = formatCountdown(dl - now);
   el.innerHTML = `
     <div style="font-weight:600;color:var(--text);margin-bottom:4px;text-transform:uppercase;font-size:14px">
-      ${next.home} <span style="color:var(--text3)">vs</span> ${next.away}
+      ${flagFor(next.home)}${next.home} <span style="color:var(--text3)">vs</span> ${flagFor(next.away)}${next.away}
     </div>
     <div style="font-size:13px;color:var(--text3);margin-bottom:6px">${DRAW_LABEL[next.draw]} — ${next.phase}</div>
     <div class="countdown" data-deadline="${dl}" style="font-size:14px;color:var(--gold)">${countdown}</div>
@@ -1180,11 +1242,11 @@ function renderLastResult() {
   } else {
     resultLabel = 'Non pronostiqué'; ptsColor = 'var(--text3)'; ptsLabel = '';
   }
-  const winnerName = res.winner === 'home' ? withResult.home : (res.winner === 'away' ? withResult.away : '–');
-  const predStr = pred && pred.winner ? (pred.winner === 'home' ? withResult.home : withResult.away) : '–';
+  const winnerName = res.winner === 'home' ? flagFor(withResult.home)+withResult.home : (res.winner === 'away' ? flagFor(withResult.away)+withResult.away : '–');
+  const predStr = pred && pred.winner ? (pred.winner === 'home' ? flagFor(withResult.home)+withResult.home : flagFor(withResult.away)+withResult.away) : '–';
   el.innerHTML = `
     <div style="font-weight:600;color:var(--text);margin-bottom:4px;text-transform:uppercase;font-size:14px">
-      ${withResult.home} <span style="color:var(--text3)">vs</span> ${withResult.away}
+      ${flagFor(withResult.home)}${withResult.home} <span style="color:var(--text3)">vs</span> ${flagFor(withResult.away)}${withResult.away}
     </div>
     <div style="font-size:13px;color:var(--text3);margin-bottom:2px">${DRAW_LABEL[withResult.draw]} — ${withResult.phase}</div>
     <div style="font-size:14px;color:var(--gold);font-family:'Bebas Neue',sans-serif;margin-bottom:6px">Vainqueur : ${winnerName}</div>
@@ -1281,14 +1343,15 @@ function matchRow(m) {
     const res = allResults[m.id];
     if (res && res.voided) {
       const winnerName = res.winner ? (res.winner==='home'?m.home:m.away) : null;
+      const winnerFlag = winnerName ? flagFor(winnerName) : '';
       return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px;opacity:0.7">
         ${gl}
-        <div class="team-name left" style="color:var(--text3)">${m.home}</div>
+        <div class="team-name left" style="color:var(--text3)">${flagFor(m.home)}${m.home}</div>
         <div class="vs">–</div><div class="vs">vs</div><div class="vs">–</div>
-        <div class="team-name right" style="color:var(--text3)">${m.away}</div>
+        <div class="team-name right" style="color:var(--text3)">${flagFor(m.away)}${m.away}</div>
         <div class="match-date" style="display:flex;flex-direction:column;align-items:center;gap:2px">
           <span class="locked-badge" style="background:rgba(255,255,255,0.08);color:var(--text3)">⛔ Match annulé (forfait)</span>
-          <span style="font-size:12px;color:var(--text3)">0 point — aucun pronostic compté${winnerName?` · ${winnerName} qualifié`:''}</span>
+          <span style="font-size:12px;color:var(--text3)">0 point — aucun pronostic compté${winnerName?` · ${winnerFlag}${winnerName} qualifié`:''}</span>
         </div>
       </div>`;
     }
@@ -1313,14 +1376,14 @@ function matchRow(m) {
       }
     }
     const scoreLabel = (exactRound && res && res.score) ? ` (${res.score})` : '';
-    const resDisplay = res && res.winner ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--text2)">Vainqueur ▸ ${res.winner==='home'?m.home:m.away}${scoreLabel}</span>` : '<span class="locked-badge">Verrouillé</span>';
+    const resDisplay = res && res.winner ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--text2)">Vainqueur ▸ ${res.winner==='home'?flagFor(m.home)+m.home:flagFor(m.away)+m.away}${scoreLabel}</span>` : '<span class="locked-badge">Verrouillé</span>';
     return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
       ${gl}
-      <div class="team-name left" style="color:${homeColor}">${m.home}${pred.winner==='home'?' 📍':''}</div>
+      <div class="team-name left" style="color:${homeColor}">${flagFor(m.home)}${m.home}${pred.winner==='home'?' 📍':''}</div>
       <div class="vs">–</div>
       <div class="vs">vs</div>
       <div class="vs">–</div>
-      <div class="team-name right" style="color:${awayColor}">${pred.winner==='away'?'📍 ':''}${m.away}</div>
+      <div class="team-name right" style="color:${awayColor}">${pred.winner==='away'?'📍 ':''}${flagFor(m.away)}${m.away}</div>
       <div class="match-date" style="display:flex;flex-direction:column;align-items:center;gap:2px">${resDisplay}${badge}</div>
     </div>`;
   }
@@ -1337,9 +1400,9 @@ function matchRow(m) {
   }
   return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
     ${gl}
-    <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${m.home}</button>
+    <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${flagFor(m.home)}${m.home}</button>
     <div class="vs">VS</div>
-    <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${m.away}</button>
+    <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${flagFor(m.away)}${m.away}</button>
     <div class="match-date" id="pst-${m.id}"><span class="countdown" data-deadline="${new Date(m.deadline).getTime()}"></span><br><span style="color:var(--text3);font-size:13px">${new Date(m.deadline).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} à ${new Date(m.deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></div>
     ${scoreRow}
   </div>`;
@@ -1404,8 +1467,8 @@ function pickScore(matchId, scoreStr) {
 function renderSpecials(c) {
   const globalLock = new Date()>=new Date('2027-05-23T10:30:00'), sp=mySpecial;
   const playersH = getDrawPlayers('H'), playersD = getDrawPlayers('D');
-  const optsH = (sel)=>playersH.map(t=>`<option value="${t}"${sel===t?' selected':''}>${t}</option>`).join('');
-  const optsD = (sel)=>playersD.map(t=>`<option value="${t}"${sel===t?' selected':''}>${t}</option>`).join('');
+  const optsH = (sel)=>playersH.map(t=>`<option value="${t}"${sel===t?' selected':''}>${flagFor(t)}${t}</option>`).join('');
+  const optsD = (sel)=>playersD.map(t=>`<option value="${t}"${sel===t?' selected':''}>${flagFor(t)}${t}</option>`).join('');
   if (globalLock) {
     c.innerHTML=`<div class="form-card">
       <div class="locked-badge" style="margin-bottom:12px">Pronostics spéciaux verrouillés</div>
@@ -1551,11 +1614,11 @@ async function renderAdminMatches() {
         const res=allResults[m.id]||{};
         const scoreOpts = exactRound ? (VALID_SCORES[draw]||[]) : [];
         html+=`<div style="display:grid;grid-template-columns:${exactRound?'1.3fr 1fr 0.8fr auto':'1.3fr 1fr auto'};gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-          <div class="team-name left" style="font-size:14px">${m.home} <span style="color:var(--text3)">vs</span> ${m.away}</div>
+          <div class="team-name left" style="font-size:14px">${flagFor(m.home)}${m.home} <span style="color:var(--text3)">vs</span> ${flagFor(m.away)}${m.away}</div>
           <select class="form-input" id="res-${m.id}" style="font-size:14px">
             <option value="">-- Vainqueur --</option>
-            <option value="home"${res.winner==='home'?' selected':''}>${m.home}</option>
-            <option value="away"${res.winner==='away'?' selected':''}>${m.away}</option>
+            <option value="home"${res.winner==='home'?' selected':''}>${flagFor(m.home)}${m.home}</option>
+            <option value="away"${res.winner==='away'?' selected':''}>${flagFor(m.away)}${m.away}</option>
           </select>
           ${exactRound ? `<select class="form-input" id="sc-${m.id}" style="font-size:14px">
             <option value="">-- Score --</option>
@@ -1632,8 +1695,8 @@ async function saveAdminResults() {
 }
 function renderAdminSpecial() {
   const playersH = getDrawPlayers('H'), playersD = getDrawPlayers('D');
-  const optsH=(sel)=>playersH.map(t=>`<option value="${t}"${sel===t?' selected':''}>${t}</option>`).join('');
-  const optsD=(sel)=>playersD.map(t=>`<option value="${t}"${sel===t?' selected':''}>${t}</option>`).join('');
+  const optsH=(sel)=>playersH.map(t=>`<option value="${t}"${sel===t?' selected':''}>${flagFor(t)}${t}</option>`).join('');
+  const optsD=(sel)=>playersD.map(t=>`<option value="${t}"${sel===t?' selected':''}>${flagFor(t)}${t}</option>`).join('');
   document.getElementById('real-winner-h').innerHTML=`<option value="">-- Choisir --</option>${optsH(specialResults.winnerH)}`;
   document.getElementById('real-winner-d').innerHTML=`<option value="">-- Choisir --</option>${optsD(specialResults.winnerD)}`;
   document.getElementById('real-finalists-h-inputs').innerHTML=[0,1].map(i=>
@@ -1713,36 +1776,34 @@ async function deleteParticipant(p) {
 function openAdminDeadlines() {
   const container = document.getElementById('admin-deadlines-inputs');
   if (!container) return;
-  let html = '';
+  let html = '<div class="info-box" style="margin-bottom:1rem">Une seule heure de clôture par tour : tous les matchs d\'un même tour (pour un tableau donné) se verrouillent en même temps.</div>';
   DRAWS.forEach(draw => {
+    html += `<div class="form-card" style="margin-bottom:1rem">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--gold);margin-bottom:12px">${DRAW_LABEL[draw]}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">`;
     ROUNDS.forEach(round => {
-      const ms = ALL_MATCHES.filter(m=>m.draw===draw && m.phase===round).sort((a,b)=>a.id-b.id);
+      const ms = ALL_MATCHES.filter(m=>m.draw===draw && m.phase===round);
       if (!ms.length) return;
-      html += `<div class="form-card" style="margin-bottom:1rem">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);margin-bottom:10px">${DRAW_LABEL[draw]} — ${round}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
-      ms.forEach((m, i) => {
-        const dlKey = draw+'_'+m.id;
-        const current = KO_DEADLINES[dlKey] || ROUND_DEFAULT_DATE[draw][round] || '';
-        const val = current.slice(0,16);
-        html += `<div style="grid-column:1/-1">
-          <label style="font-size:14px;color:var(--text2);display:block;margin-bottom:4px">
-            Match ${i+1} — <span style="color:var(--text)">${m.home}</span> vs <span style="color:var(--text)">${m.away}</span>
-          </label>
-          <input type="datetime-local" class="form-input" id="dl-${dlKey}" value="${val}" style="font-size:15px;color-scheme:dark">
-        </div>`;
-      });
-      html += '</div></div>';
+      const dlKey = draw+'_'+round;
+      const current = KO_DEADLINES[dlKey] || ROUND_DEFAULT_DATE[draw][round] || '';
+      const val = current.slice(0,16);
+      html += `<div>
+        <label style="font-size:14px;color:var(--text2);display:block;margin-bottom:4px">${round} <span style="color:var(--text3);font-size:12px">(${ms.length} match${ms.length>1?'s':''})</span></label>
+        <input type="datetime-local" class="form-input" id="dl-${dlKey}" value="${val}" style="font-size:15px;color-scheme:dark">
+      </div>`;
     });
+    html += '</div></div>';
   });
   container.innerHTML = html;
 }
 async function saveDeadlines() {
   const newDl = {};
-  ALL_MATCHES.forEach(m => {
-    const dlKey = m.draw+'_'+m.id;
-    const el = document.getElementById('dl-'+dlKey);
-    if (el && el.value) newDl[dlKey] = el.value;
+  DRAWS.forEach(draw => {
+    ROUNDS.forEach(round => {
+      const dlKey = draw+'_'+round;
+      const el = document.getElementById('dl-'+dlKey);
+      if (el && el.value) newDl[dlKey] = el.value;
+    });
   });
   KO_DEADLINES = newDl;
   ALL_MATCHES = buildMatches();
@@ -1751,6 +1812,28 @@ async function saveDeadlines() {
 }
 
 // ── Admin : joueurs (1er tour) et qualifiés (tours suivants) ───────────────
+function bulkImportRound1(draw) {
+  const ta = document.getElementById('bulk-import-'+draw);
+  const lines = ta.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if (!lines.length) { showToast('Colle au moins un nom avant d\'importer', 'error'); return; }
+  const validCodes = new Set(COUNTRIES.map(c=>c[0]));
+  let count = 0, natCount = 0;
+  for (let i = 0; i < lines.length && i < 128; i++) {
+    const slot = i+1;
+    const [rawName, rawCode] = lines[i].split(';').map(s=>s?s.trim():'');
+    const el = document.getElementById('ko-name-'+draw+slot);
+    if (el) { el.value = rawName; count++; }
+    if (rawCode) {
+      const code = rawCode.toUpperCase();
+      const natEl = document.getElementById('ko-nation-'+draw+slot);
+      if (natEl && validCodes.has(code)) { natEl.value = code; natCount++; }
+    }
+  }
+  const natMsg = natCount>0 ? ` (dont ${natCount} nationalité${natCount>1?'s':''})` : '';
+  if (lines.length > 128) showToast(`${count} noms importés${natMsg} (les ${lines.length-128} lignes en trop ont été ignorées) — vérifie puis enregistre`, 'info');
+  else if (lines.length < 128) showToast(`${count} noms importés${natMsg} sur 128 attendus — vérifie puis enregistre`, 'info');
+  else showToast(`128 noms importés${natMsg} — vérifie puis clique "Enregistrer les joueurs"`);
+}
 function openAdminKo() {
   const container = document.getElementById('admin-ko-inputs');
   if (!container) return;
@@ -1759,6 +1842,7 @@ function openAdminKo() {
     let slotBase = 1;
     ROUNDS.forEach((round, ri) => {
       const count = ROUND_SLOTS[ri];
+      const showNation = ri === 0;
       html += `<div style="margin-bottom:1.5rem">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${DRAW_LABEL[draw]} — ${round}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
@@ -1767,13 +1851,16 @@ function openAdminKo() {
         const defA = defaultSlotName(draw, a, ri), defB = defaultSlotName(draw, b, ri);
         const va = (KO_NAMES[draw+a] && KO_NAMES[draw+a] !== defA) ? KO_NAMES[draw+a] : (ri===0 ? (KO_NAMES[draw+a]||'') : '');
         const vb = (KO_NAMES[draw+b] && KO_NAMES[draw+b] !== defB) ? KO_NAMES[draw+b] : (ri===0 ? (KO_NAMES[draw+b]||'') : '');
+        const natA = KO_NATIONS[draw+a] || '', natB = KO_NATIONS[draw+b] || '';
         html += `<div>
           <label style="font-size:13px;color:var(--text3);display:block;margin-bottom:3px">Match ${m+1} — Joueur A</label>
           <input class="form-input" id="ko-name-${draw}${a}" type="text" placeholder="${defA}" value="${va}" style="font-size:15px">
+          ${showNation ? `<select class="form-input" id="ko-nation-${draw}${a}" style="margin-top:4px;font-size:13px">${countryOptions(natA)}</select>` : ''}
         </div>
         <div>
           <label style="font-size:13px;color:var(--text3);display:block;margin-bottom:3px">Match ${m+1} — Joueur B</label>
           <input class="form-input" id="ko-name-${draw}${b}" type="text" placeholder="${defB}" value="${vb}" style="font-size:15px">
+          ${showNation ? `<select class="form-input" id="ko-nation-${draw}${b}" style="margin-top:4px;font-size:13px">${countryOptions(natB)}</select>` : ''}
         </div>`;
       }
       html += '</div></div>';
@@ -1784,6 +1871,7 @@ function openAdminKo() {
 }
 async function saveKoNames() {
   const newNames = {};
+  const newNations = {};
   DRAWS.forEach(draw => {
     let slotBase = 1;
     ROUNDS.forEach((round, ri) => {
@@ -1794,13 +1882,19 @@ async function saveKoNames() {
         if (!el) continue;
         const val = el.value.trim();
         if (val) newNames[draw+slot] = val;
+        if (ri === 0) {
+          const natEl = document.getElementById('ko-nation-'+draw+slot);
+          if (natEl && natEl.value) newNations[draw+slot] = natEl.value;
+        }
       }
       slotBase += count*2;
     });
   });
   KO_NAMES = Object.assign({}, KO_NAMES, newNames);
+  KO_NATIONS = Object.assign({}, KO_NATIONS, newNations);
   ALL_MATCHES = buildMatches();
-  await saveConfigToDb({ ko_names: KO_NAMES });
+  buildNameToFlag();
+  await saveConfigToDb({ ko_names: KO_NAMES, ko_nations: KO_NATIONS });
   showToast('Joueurs / qualifiés mis à jour !');
 }
 
