@@ -9,11 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#1f2937;--bg2:#1f2937;--bg3:#374151;--bg4:#374151;
-  --gold:#FBBF24;--gold2:#FCD34D;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;
+  --bg:#06492D;--bg2:#06492D;--bg3:#0B5C3A;--bg4:#0B5C3A;
+  --gold:#BB5522;--gold2:#D97340;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;
   --maple:#e8472a;--clutch:#1a56db;--zayu:#16a34a;
   --text:#FEFCE8;--text2:#d1d5db;--text3:#9ca3af;
-  --border:#1e2d45;--border2:#2a3d5a;
+  --border:#043D22;--border2:#0A4F2E;
 }
 body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
@@ -22,7 +22,7 @@ body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);colo
 #auth-overlay.hidden{display:none}
 .auth-box{background:var(--bg2);border:2px solid var(--gold);border-radius:16px;padding:2rem;width:100%;max-width:380px;position:relative}
 .auth-logo{text-align:center;margin-bottom:1.5rem}
-.auth-logo .badge{display:inline-block;background:var(--gold);color:#374151;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;margin-bottom:10px}
+.auth-logo .badge{display:inline-block;background:var(--gold);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;margin-bottom:10px}
 .auth-logo h1{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;line-height:1}
 .auth-logo h1 span{color:var(--gold)}
 .auth-logo p{font-size:14px;color:var(--text3);margin-top:4px}
@@ -36,7 +36,7 @@ body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);colo
 .auth-input.error{border-color:var(--red)}
 .auth-error{font-size:14px;color:var(--red);margin-top:4px;display:none}
 .auth-error.show{display:block}
-.auth-btn{width:100%;padding:12px;background:var(--gold);color:#374151;border:none;border-radius:8px;font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+.auth-btn{width:100%;padding:12px;background:var(--gold);color:#fff;border:none;border-radius:8px;font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
 .auth-btn:hover{background:#ffd700}
 .auth-btn:disabled{opacity:0.6;cursor:not-allowed}
 .auth-hint{font-size:14px;color:var(--text3);text-align:center;margin-top:14px;line-height:1.6}
@@ -46,24 +46,24 @@ body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);colo
 .pw-strength.strong{background:var(--green);width:100%}
 
 /* ── USER PILL in nav ── */
-.user-pill{display:flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:20px;font-size:15px;font-weight:500;color:var(--gold);cursor:pointer;transition:all .2s;white-space:nowrap;margin:auto 12px auto 0;box-shadow:0 0 12px rgba(251,191,36,0.1)}
+.user-pill{display:flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(187,85,34,0.1);border:1px solid rgba(187,85,34,0.3);border-radius:20px;font-size:15px;font-weight:500;color:var(--gold);cursor:pointer;transition:all .2s;white-space:nowrap;margin:auto 12px auto 0;box-shadow:0 0 12px rgba(187,85,34,0.15)}
 .user-pill:hover{background:rgba(245,200,66,0.18);box-shadow:0 0 18px rgba(245,200,66,0.2);transform:scale(1.03)}
-.user-avatar{width:28px;height:28px;background:var(--gold);color:#374151;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;letter-spacing:-0.5px}
+.user-avatar{width:28px;height:28px;background:var(--gold);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;letter-spacing:-0.5px}
 
 /* ── HERO ── */
-.hero{background:linear-gradient(160deg,#07090f 0%,#0d1a30 40%,#071a12 100%);padding:0;text-align:center;border-bottom:2px solid rgba(251,191,36,0.25);position:relative;overflow:hidden}
+.hero{background:linear-gradient(160deg,#02301B 0%,#06492D 55%,#0B5C3A 100%);padding:0;text-align:center;border-bottom:2px solid rgba(255,255,255,0.25);position:relative;overflow:hidden}
 .hero-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .hero-inner{position:relative;z-index:2;padding:1.5rem 1rem 1rem}
 .hero-logo{display:flex;justify-content:center;align-items:center;padding:1.5rem 0 0.5rem;position:relative;z-index:2}
-.hero-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#374151;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:10px;box-shadow:0 2px 10px rgba(251,191,36,0.4)}
+.hero-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#fff;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:10px;box-shadow:0 2px 10px rgba(187,85,34,0.4)}
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,7vw,4rem);letter-spacing:4px;line-height:1;text-shadow:0 2px 20px rgba(245,200,66,0.2)}
-.hero h1 span{color:var(--gold);text-shadow:0 0 30px rgba(251,191,36,0.5)}
+.hero h1 span{color:var(--gold);text-shadow:0 0 30px rgba(217,115,64,0.6)}
 .hero p{color:var(--text2);font-size:15px;margin-top:6px;letter-spacing:0.5px}
 
 .hero-stats{display:flex;justify-content:center;gap:0;margin-top:1.25rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.06);padding-top:1rem}
 .hero-stat{text-align:center;flex:1;min-width:80px;padding:0 1rem;border-right:1px solid rgba(255,255,255,0.06)}
 .hero-stat:last-child{border-right:none}
-.hero-stat strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1;text-shadow:0 0 20px rgba(251,191,36,0.25)}
+.hero-stat strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1;text-shadow:0 0 20px rgba(187,85,34,0.35)}
 .hero-stat span{font-size:12px;color:var(--text3);letter-spacing:1px;text-transform:uppercase}
 
 /* ── NAV ── */
@@ -72,7 +72,7 @@ nav{display:flex;align-items:center;background:var(--bg2);border-bottom:1px soli
 nav::-webkit-scrollbar{display:none}
 .tab-short{display:none}
 nav button.nav-tab{flex:1;min-width:80px;padding:14px 8px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
-nav button.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(251,191,36,0.4)}
+nav button.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(187,85,34,0.4)}
 nav button.nav-tab:hover:not(.active){color:var(--text);background:var(--bg3)}
 
 /* ── PAGES ── */
@@ -81,7 +81,7 @@ nav button.nav-tab:hover:not(.active){color:var(--text);background:var(--bg3)}
 .page{display:none;padding:1.5rem;max-width:900px;margin:0 auto}
 .page.active{display:block;animation:fadeSlide .25s ease}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:8px;text-shadow:0 0 20px rgba(251,191,36,0.25)}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:8px;text-shadow:0 0 20px rgba(187,85,34,0.3)}
 .section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
 /* ── FORM ELEMENTS ── */
@@ -102,16 +102,16 @@ select.form-input{appearance:none;cursor:pointer}
 .match-date{font-size:15px;color:var(--text2);text-align:center;grid-column:1/-1;margin-top:6px}
 .score-input{width:100%;text-align:center;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;outline:none;transition:border .2s;-moz-appearance:textfield;appearance:textfield}
 .score-input::-webkit-outer-spin-button,.score-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.score-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(251,191,36,0.15);transform:scale(1.05)}
+.score-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(187,85,34,0.25);transform:scale(1.05)}
 .pick-btn{width:100%;text-align:center;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 6px;color:var(--text);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:0.2px}
-.pick-btn:hover{border-color:var(--gold);background:rgba(251,191,36,0.08)}
-.pick-btn.picked{background:var(--gold);color:#374151;border-color:var(--gold);box-shadow:0 0 0 3px rgba(251,191,36,0.2)}
+.pick-btn:hover{border-color:var(--gold);background:rgba(187,85,34,0.12)}
+.pick-btn.picked{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 0 0 3px rgba(187,85,34,0.3)}
 .locked-badge{font-size:12px;background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3);border-radius:4px;padding:2px 8px;display:inline-block}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 24px;border-radius:8px;border:none;font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#374151;box-shadow:0 4px 15px rgba(251,191,36,0.25)}
-.btn-gold:hover{background:linear-gradient(135deg,var(--gold2),var(--gold));transform:translateY(-1px);box-shadow:0 6px 20px rgba(251,191,36,0.35)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;box-shadow:0 4px 15px rgba(187,85,34,0.35)}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold2),var(--gold));transform:translateY(-1px);box-shadow:0 6px 20px rgba(187,85,34,0.45)}
 .btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text)}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 .btn-sm{padding:6px 14px;font-size:14px}
@@ -125,7 +125,7 @@ select.form-input{appearance:none;cursor:pointer}
 .rank-row.header{background:var(--bg3);font-size:13px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
 .rank-row:not(.header):hover{background:var(--bg3)}
 .rank-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--text3);text-align:center}
-.rank-num.gold{color:var(--gold);text-shadow:0 0 12px rgba(251,191,36,0.5);font-size:1.4rem}
+.rank-num.gold{color:var(--gold);text-shadow:0 0 12px rgba(187,85,34,0.5);font-size:1.4rem}
 .rank-num.silver{color:#d4d4d4;text-shadow:0 0 8px rgba(212,212,212,0.4)}
 .rank-num.bronze{color:#e07830;text-shadow:0 0 8px rgba(224,120,48,0.4)}
 .rank-pseudo{font-weight:600;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -136,18 +136,18 @@ select.form-input{appearance:none;cursor:pointer}
 /* ── MISC ── */
 .points-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1.5rem}
 .legend-card{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;transition:transform .2s}
-.legend-card:hover{transform:scale(1.04);border-color:rgba(251,191,36,0.25)}
+.legend-card:hover{transform:scale(1.04);border-color:rgba(187,85,34,0.35)}
 .legend-pts{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold)}
 .legend-label{font-size:13px;color:var(--text3);margin-top:2px}
 .tab-sub{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;padding-bottom:0}
 .tab-sub button{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text2);font-size:14px;cursor:pointer;white-space:nowrap;font-family:'Aptos','Outfit',system-ui,sans-serif;transition:all .2s}
-.tab-sub button.active{background:rgba(251,191,36,0.1);border-color:var(--gold);color:var(--gold)}
+.tab-sub button.active{background:rgba(187,85,34,0.15);border-color:var(--gold);color:var(--gold)}
 .group-header{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:4px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--text2)}
 .info-box{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:12px 16px;font-size:15px;color:#93c5fd;margin-bottom:1rem;line-height:1.6}
-.warn-box{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:8px;padding:12px 16px;font-size:15px;color:#FCD34D;margin-bottom:1rem;line-height:1.6}
+.warn-box{background:rgba(187,85,34,0.12);border:1px solid rgba(187,85,34,0.35);border-radius:8px;padding:12px 16px;font-size:15px;color:#F0C4A8;margin-bottom:1rem;line-height:1.6}
 .my-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1.5rem}
 .my-stat-card{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--gold);border-radius:12px;padding:14px;text-align:center;transition:transform .2s,border-color .2s}
-.my-stat-card:hover{transform:translateY(-2px);border-color:rgba(251,191,36,0.25)}
+.my-stat-card:hover{transform:translateY(-2px);border-color:rgba(187,85,34,0.35)}
 .my-stat-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1}
 .my-stat-label{font-size:13px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 .config-warning{background:rgba(239,68,68,0.1);border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin:1rem 0;text-align:center}
@@ -165,7 +165,7 @@ select.form-input{appearance:none;cursor:pointer}
 
 /* ── ACCOUNT PAGE ── */
 .account-header{display:flex;align-items:center;gap:16px;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem}
-.account-avatar{width:56px;height:56px;background:var(--gold);color:#374151;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;flex-shrink:0}
+.account-avatar{width:56px;height:56px;background:var(--gold);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;flex-shrink:0}
 .account-name{font-size:1.1rem;font-weight:600}
 .account-sub{font-size:14px;color:var(--text3);margin-top:2px}
 
@@ -202,8 +202,6 @@ select.form-input{appearance:none;cursor:pointer}
   .rank-exact{font-size:13px}
   .rank-pseudo{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
   nav .nav-tab{font-size:10px;padding:8px 2px}
-  /* Mascottes cachées sur mobile */
-  #mascot-left, #mascot-right{display:none !important}
   /* Labels courts sur mobile */
   .tab-full{display:none}
   .tab-short{display:inline}
@@ -353,7 +351,7 @@ const ADMIN_PSEUDO = 'Admin CSE';
         Roland-Garros 2027 se déroulera du <strong style="color:var(--text)">23 mai au 6 juin 2027</strong> à Paris, Porte d'Auteuil.
       </p>
       <p style="font-size:15px;color:var(--text2);line-height:1.9;margin-top:10px">
-        Au programme : <strong style="color:var(--text)">2 tableaux (Simple Messieurs & Simple Dames), 128 joueurs par tableau, 7 tours</strong> et un seul Mousquetaire par tableau <svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:middle;margin-left:2px" fill="#FBBF24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        Au programme : <strong style="color:var(--text)">2 tableaux (Simple Messieurs & Simple Dames), 128 joueurs par tableau, 7 tours</strong> et un seul Mousquetaire par tableau <svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:middle;margin-left:2px" fill="#FFFFFF"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
       </p>
       <p style="font-size:15px;color:var(--text2);line-height:1.9;margin-top:10px">
         Pronostique le vainqueur de chaque match (dès le 1er tour) et tente de terminer en tête du classement !
@@ -367,25 +365,27 @@ const ADMIN_PSEUDO = 'Admin CSE';
       </p>
     </div>
 
-    <div class="section-title">🎾 Barème des points — Matchs (vainqueur uniquement)</div>
+    <div class="section-title">🎾 Barème des points — Matchs</div>
     <div class="form-card" style="padding:0;overflow:hidden;margin-bottom:1rem;border:1px solid var(--gold)">
       <table style="width:100%;border-collapse:collapse;font-size:15px">
         <thead>
           <tr style="background:var(--bg3)">
             <th style="padding:10px 14px;text-align:left;color:var(--text2);font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap">Tour</th>
             <th style="padding:10px 14px;text-align:center;color:var(--text2);font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap">Bon vainqueur</th>
+            <th style="padding:10px 14px;text-align:center;color:var(--text2);font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap">+ Score exact</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">1er tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">1 pt</td></tr>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">2e tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">2 pts</td></tr>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">3e tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">3 pts</td></tr>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Huitièmes de finale</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">5 pts</td></tr>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Quarts de finale</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">8 pts</td></tr>
-          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Demi-finales</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">12 pts</td></tr>
-          <tr><td style="padding:10px 14px;color:var(--text);font-weight:600">Finale</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">20 pts</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">1er tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">1 pt</td><td style="padding:10px 14px;text-align:center;color:var(--text3)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">2e tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">2 pts</td><td style="padding:10px 14px;text-align:center;color:var(--text3)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">3e tour</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">3 pts</td><td style="padding:10px 14px;text-align:center;color:var(--text3)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Huitièmes de finale</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">5 pts</td><td style="padding:10px 14px;text-align:center;color:var(--text3)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Quarts de finale 🎯</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">8 pts</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">+8 pts</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px;color:var(--text)">Demi-finales 🎯</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">12 pts</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">+12 pts</td></tr>
+          <tr><td style="padding:10px 14px;color:var(--text);font-weight:600">Finale 🎯</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">20 pts</td><td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--gold)">+20 pts</td></tr>
         </tbody>
       </table>
+      <p style="font-size:13px;color:var(--text3);padding:10px 14px;border-top:1px solid var(--border)">🎯 À partir des quarts de finale, le score exact en sets est aussi demandé (3 sets gagnants chez les Messieurs, 2 sets gagnants chez les Dames). Le trouver rapporte un bonus égal aux points du bon vainqueur.</p>
     </div>
 
     <div class="section-title" style="margin-top:1rem">🎯 Barème des points — Pronostics spéciaux</div>
@@ -416,7 +416,12 @@ const ADMIN_PSEUDO = 'Admin CSE';
 
   <!-- CLASSEMENT -->
   <div id="page-classement" class="page">
-    <div class="section-title">🏆 Classement général</div>
+    <div class="section-title">🏆 Classement</div>
+    <div class="tab-sub" id="rank-scope-tabs" style="margin-bottom:1rem">
+      <button class="active" onclick="switchRankScope('all',this)">Cumulé</button>
+      <button onclick="switchRankScope('H',this)">🎾 Tableau Messieurs</button>
+      <button onclick="switchRankScope('D',this)">🎾 Tableau Dames</button>
+    </div>
     <div style="margin-bottom:1rem;display:flex;justify-content:flex-end">
       <button class="btn btn-outline btn-sm" onclick="loadRanking()">↻ Actualiser</button>
     </div>
@@ -530,11 +535,11 @@ const ADMIN_PSEUDO = 'Admin CSE';
           <p style="font-size:14px;color:var(--text3);margin-bottom:10px">Couleur principale utilisée partout dans l'interface</p>
           <div style="display:flex;align-items:center;gap:12px">
             <input type="color" id="admin-accent-color" style="width:48px;height:40px;border:none;background:none;cursor:pointer;border-radius:8px">
-            <input class="form-input" id="admin-accent-hex" type="text" placeholder="#FBBF24" style="flex:1;font-family:monospace" oninput="syncColorPicker()">
+            <input class="form-input" id="admin-accent-hex" type="text" placeholder="#BB5522" style="flex:1;font-family:monospace" oninput="syncColorPicker()">
             <div id="admin-color-preview" style="width:40px;height:40px;border-radius:8px;border:1px solid var(--border)"></div>
           </div>
           <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-            <button class="btn btn-outline btn-sm" onclick="setPresetColor('#FBBF24')">🩵 Cyan</button>
+            <button class="btn btn-outline btn-sm" onclick="setPresetColor('#BB5522')">🟤 Terre cuite RG</button>
             <button class="btn btn-outline btn-sm" onclick="setPresetColor('#22c55e')">🟢 Vert</button>
             <button class="btn btn-outline btn-sm" onclick="setPresetColor('#3b82f6')">🔵 Bleu</button>
             <button class="btn btn-outline btn-sm" onclick="setPresetColor('#ef4444')">🔴 Rouge</button>
@@ -615,6 +620,11 @@ const ROUNDS = ['1er Tour','2e Tour','3e Tour','Huitièmes de finale','Quarts de
 const ROUND_SHORT = { '1er Tour':'1er Tour','2e Tour':'2e Tour','3e Tour':'3e Tour','Huitièmes de finale':'8es','Quarts de finale':'Quarts','Demi-finales':'Demies','Finale':'Finale' };
 const ROUND_SLOTS = [64,32,16,8,4,2,1]; // nombre de matchs par tour
 const PHASE_MULT  = { '1er Tour':1,'2e Tour':2,'3e Tour':3,'Huitièmes de finale':5,'Quarts de finale':8,'Demi-finales':12,'Finale':20 };
+// À partir des quarts de finale, on pronostique aussi le score exact en sets.
+// Bonus (en plus des points "bon vainqueur") si le score exact est trouvé = mult du tour.
+const EXACT_SCORE_ROUNDS = ['Quarts de finale','Demi-finales','Finale'];
+const VALID_SCORES = { H:['3-0','3-1','3-2'], D:['2-0','2-1'] }; // H = 3 sets gagnants, D = 2 sets gagnants
+function isExactScoreRound(phase) { return EXACT_SCORE_ROUNDS.includes(phase); }
 
 // Dates par défaut 2027 (tableau principal du 23 mai au 6 juin 2027)
 const ROUND_DEFAULT_DATE = {
@@ -663,14 +673,14 @@ let appConfig = {
   badgeText: 'CSE Astrea Monts — Concours Officiel',
   heroTitle: 'ROLAND-GARROS 2027',
   heroSubtitle: "Pronostics & Classement en temps réel — Paris, Porte d'Auteuil",
-  accentColor: '#FBBF24',
+  accentColor: '#BB5522',
   rules: [
     "ARTICLE 1 – OBJET|Le CSE d'Astrea Monts organise un concours gratuit de pronostics sportifs à l'occasion de Roland-Garros 2027. Ce concours a pour objectif de proposer une animation conviviale et fédératrice à destination des salariés, dans un cadre ludique et sans enjeu commercial.",
     "ARTICLE 2 – CONDITIONS DE PARTICIPATION|Le concours est gratuit et ouvert à l'ensemble des salariés de l'entreprise. Chaque participant ne peut créer qu'un seul compte. En cas de comptes multiples détectés, seul le premier compte enregistré sera pris en compte. Les membres du CSE sont autorisés à participer.",
-    "ARTICLE 3 – MODALITÉS DE PARTICIPATION|La participation s'effectue via l'application en ligne dont le lien est communiqué par le CSE. Pour chaque match des tableaux Simple Messieurs et Simple Dames, il faut désigner le joueur ou la joueuse que l'on pense vainqueur (aucun score à saisir). Les pronostics doivent être saisis avant le début de chaque match et peuvent être modifiés librement jusqu'à sa clôture.",
+    "ARTICLE 3 – MODALITÉS DE PARTICIPATION|La participation s'effectue via l'application en ligne dont le lien est communiqué par le CSE. Pour chaque match des tableaux Simple Messieurs et Simple Dames, il faut désigner le joueur ou la joueuse que l'on pense vainqueur. À partir des quarts de finale, le score exact en sets est également demandé (3 sets gagnants chez les Messieurs, 2 sets gagnants chez les Dames). Les pronostics doivent être saisis avant le début de chaque match et peuvent être modifiés librement jusqu'à sa clôture.",
     "ARTICLE 4 – PRONOSTICS SPÉCIAUX|Quatre pronostics spéciaux sont à saisir avant le début du tournoi (23 mai 2027) : le vainqueur du Simple Messieurs, le vainqueur du Simple Dames, et les deux finalistes de chaque tableau. Ces pronostics sont verrouillés dès le coup d'envoi du premier match.",
-    "ARTICLE 5 – SYSTÈME DE POINTS|<table style='width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:14px'><thead><tr style='border-bottom:1px solid rgba(251,191,36,0.3)'><th style='text-align:left;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Tour</th><th style='text-align:center;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Bon vainqueur</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>1er tour</td><td style='text-align:center;padding:5px 8px'>1 pt</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>2e tour</td><td style='text-align:center;padding:5px 8px'>2 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>3e tour</td><td style='text-align:center;padding:5px 8px'>3 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Huitièmes de finale</td><td style='text-align:center;padding:5px 8px'>5 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Quarts de finale</td><td style='text-align:center;padding:5px 8px'>8 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Demi-finales</td><td style='text-align:center;padding:5px 8px'>12 pts</td></tr><tr><td style='padding:5px 8px'>Finale</td><td style='text-align:center;padding:5px 8px'>20 pts</td></tr></tbody></table><table style='width:100%;border-collapse:collapse;margin:0 0 8px;font-size:14px'><thead><tr style='border-bottom:1px solid rgba(251,191,36,0.3)'><th style='text-align:left;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Pronostic spécial</th><th style='text-align:center;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Points</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Vainqueur Simple Messieurs</td><td style='text-align:center;padding:5px 8px'>25 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Vainqueur Simple Dames</td><td style='text-align:center;padding:5px 8px'>25 pts</td></tr><tr><td style='padding:5px 8px'>Finaliste (par joueur/joueuse correct)</td><td style='text-align:center;padding:5px 8px'>8 pts</td></tr></tbody></table>Aucun score en sets n'est demandé : seul le nom du vainqueur du match compte pour l'attribution des points.",
-    "ARTICLE 6 – CLASSEMENT|Le classement est établi en fonction du total de points cumulés. Il est évolutif pendant toute la durée du tournoi et définitif à l'issue de la validation de l'ensemble des résultats officiels. En cas d'égalité, le départage s'effectue selon : 1) nombre de bons vainqueurs pronostiqués, 2) tirage au sort.",
+    "ARTICLE 5 – SYSTÈME DE POINTS|<table style='width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:14px'><thead><tr style='border-bottom:1px solid rgba(187,85,34,0.4)'><th style='text-align:left;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Tour</th><th style='text-align:center;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Bon vainqueur</th><th style='text-align:center;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>+ Score exact</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>1er tour</td><td style='text-align:center;padding:5px 8px'>1 pt</td><td style='text-align:center;padding:5px 8px'>—</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>2e tour</td><td style='text-align:center;padding:5px 8px'>2 pts</td><td style='text-align:center;padding:5px 8px'>—</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>3e tour</td><td style='text-align:center;padding:5px 8px'>3 pts</td><td style='text-align:center;padding:5px 8px'>—</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Huitièmes de finale</td><td style='text-align:center;padding:5px 8px'>5 pts</td><td style='text-align:center;padding:5px 8px'>—</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Quarts de finale 🎯</td><td style='text-align:center;padding:5px 8px'>8 pts</td><td style='text-align:center;padding:5px 8px'>+8 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Demi-finales 🎯</td><td style='text-align:center;padding:5px 8px'>12 pts</td><td style='text-align:center;padding:5px 8px'>+12 pts</td></tr><tr><td style='padding:5px 8px'>Finale 🎯</td><td style='text-align:center;padding:5px 8px'>20 pts</td><td style='text-align:center;padding:5px 8px'>+20 pts</td></tr></tbody></table><table style='width:100%;border-collapse:collapse;margin:0 0 8px;font-size:14px'><thead><tr style='border-bottom:1px solid rgba(187,85,34,0.4)'><th style='text-align:left;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Pronostic spécial</th><th style='text-align:center;padding:6px 8px;color:var(--gold);font-family:Bebas Neue,sans-serif;letter-spacing:1px'>Points</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Vainqueur Simple Messieurs</td><td style='text-align:center;padding:5px 8px'>25 pts</td></tr><tr style='border-bottom:1px solid var(--border)'><td style='padding:5px 8px'>Vainqueur Simple Dames</td><td style='text-align:center;padding:5px 8px'>25 pts</td></tr><tr><td style='padding:5px 8px'>Finaliste (par joueur/joueuse correct)</td><td style='text-align:center;padding:5px 8px'>8 pts</td></tr></tbody></table>À partir des quarts de finale, trouver en plus le score exact en sets (3 sets gagnants chez les Messieurs, 2 sets gagnants chez les Dames) rapporte un bonus égal aux points du bon vainqueur de ce tour. En cas de match arrêté avant son début pour forfait d'un des deux joueurs, le CSE peut annuler le match : celui-ci ne rapporte alors aucun point à aucun participant, quel que soit le pronostic saisi, mais le joueur qualifié est bien pris en compte pour la suite du tableau.",
+    "ARTICLE 6 – CLASSEMENT|Trois classements distincts sont proposés : Cumulé (les deux tableaux et tous les pronostics spéciaux confondus), Tableau Messieurs (uniquement le Simple Messieurs) et Tableau Dames (uniquement le Simple Dames). Chaque classement est établi en fonction du total de points cumulés sur son périmètre. Il est évolutif pendant toute la durée du tournoi et définitif à l'issue de la validation de l'ensemble des résultats officiels. En cas d'égalité, le départage s'effectue selon : 1) nombre de bons vainqueurs pronostiqués, 2) tirage au sort.",
     "ARTICLE 7 – DOTATIONS|Les dotations sont fournies par le CSE et attribuées aux 3 participants les mieux classés à l'issue du tournoi. La nature des lots sera communiquée séparément. Les lots ne peuvent faire l'objet d'aucune contrepartie financière et ne sont ni échangeables, ni remboursables.",
     "ARTICLE 8 – RESPONSABILITÉ|Le CSE se réserve le droit de modifier, reporter ou annuler le concours en cas de force majeure ou de circonstances exceptionnelles indépendantes de sa volonté. Aucune contestation ne pourra être formulée concernant : les résultats sportifs officiels, l'attribution des points, ou le classement final. Les décisions du CSE sont souveraines.",
     "ARTICLE 9 – DONNÉES PERSONNELLES|Les données collectées (nom, prénom) sont utilisées exclusivement dans le cadre du concours. Elles ne seront pas utilisées à des fins commerciales et ne seront pas conservées au-delà de la durée nécessaire à l'organisation du concours.",
@@ -837,10 +847,6 @@ async function onLoginSuccess(pseudo) {
   document.getElementById('app').style.display = '';
   const adminBtn = document.getElementById('nav-admin-btn');
   if (adminBtn) adminBtn.style.display = pseudo === ADMIN_PSEUDO ? '' : 'none';
-  const ml = document.getElementById('mascot-left');
-  const mr = document.getElementById('mascot-right');
-  if (ml) ml.style.display = '';
-  if (mr) mr.style.display = '';
   // update UI
   document.getElementById('user-pill-name').textContent = pseudo;
   document.getElementById('user-avatar').textContent = initials(pseudo);
@@ -912,20 +918,33 @@ async function changePassword() {
 }
 
 // ── Scoring ────────────────────────────────────────────────────────────────
-// Pronostic gagnant = uniquement le nom du vainqueur du match (pas de score).
-function computeScore(pronos, special) {
+// Pronostic gagnant = le vainqueur du match ; à partir des quarts, un bonus
+// (= mult du tour) est ajouté si le score exact en sets est également trouvé.
+// Un match marqué "annulé / forfait" ne rapporte ni ne coûte aucun point.
+// scope : 'all' (cumulé, défaut) | 'H' (Simple Messieurs) | 'D' (Simple Dames)
+function computeScore(pronos, special, scope) {
+  scope = scope || 'all';
   let points=0, exact=0;
   ALL_MATCHES.forEach(m => {
+    if (scope !== 'all' && m.draw !== scope) return;
     const res=allResults[m.id], pred=pronos[m.id];
-    if (!res||!pred||!pred.winner||!res.winner) return;
+    if (!res||res.voided) return;
+    if (!pred||!pred.winner||!res.winner) return;
     const mult=PHASE_MULT[m.phase]||1;
-    if (pred.winner===res.winner) { points+=mult; exact++; }
+    if (pred.winner===res.winner) {
+      points+=mult; exact++;
+      if (isExactScoreRound(m.phase) && pred.score && res.score && pred.score===res.score) points+=mult;
+    }
   });
   if (special&&specialResults) {
-    if (special.winnerH && specialResults.winnerH===special.winnerH) points+=25;
-    if (special.winnerD && specialResults.winnerD===special.winnerD) points+=25;
-    (special.finalistsH||[]).forEach(t=>{ if((specialResults.finalistsH||[]).includes(t)) points+=8; });
-    (special.finalistsD||[]).forEach(t=>{ if((specialResults.finalistsD||[]).includes(t)) points+=8; });
+    if (scope==='all' || scope==='H') {
+      if (special.winnerH && specialResults.winnerH===special.winnerH) points+=25;
+      (special.finalistsH||[]).forEach(t=>{ if((specialResults.finalistsH||[]).includes(t)) points+=8; });
+    }
+    if (scope==='all' || scope==='D') {
+      if (special.winnerD && specialResults.winnerD===special.winnerD) points+=25;
+      (special.finalistsD||[]).forEach(t=>{ if((specialResults.finalistsD||[]).includes(t)) points+=8; });
+    }
   }
   return { points, exact };
 }
@@ -933,17 +952,17 @@ function computeScore(pronos, special) {
 // ── Supabase helpers ───────────────────────────────────────────────────────
 async function loadMyPronos() {
   if (!sbReady||!currentPseudo) return;
-  const { data } = await sb.from('pronos').select('match_id,winner,special').eq('pseudo',currentPseudo);
+  const { data } = await sb.from('pronos').select('match_id,winner,score,special').eq('pseudo',currentPseudo);
   myPronos={}; mySpecial={};
   (data||[]).forEach(r => {
     if (r.match_id==='special') mySpecial=r.special||{};
-    else myPronos[r.match_id]={ winner:r.winner };
+    else myPronos[r.match_id]={ winner:r.winner, score:r.score||'' };
   });
 }
 async function loadResults() {
   if (!sbReady) return;
-  const { data } = await sb.from('results').select('match_id,winner');
-  allResults={}; (data||[]).forEach(r=>{ allResults[r.match_id]={ winner:r.winner }; });
+  const { data } = await sb.from('results').select('match_id,winner,score,voided');
+  allResults={}; (data||[]).forEach(r=>{ allResults[r.match_id]={ winner:r.winner, score:r.score||'', voided:!!r.voided }; });
   const { data:sp } = await sb.from('special_results').select('*').limit(1);
   specialResults = sp&&sp[0] ? sp[0] : {};
 }
@@ -1001,7 +1020,7 @@ async function loadStats() {
   const matchsJoues = Object.keys(allResults).length;
   document.getElementById('stat-buts').textContent = matchsJoues;
 }
-async function upsertProno(matchId, winner) {
+async function upsertProno(matchId) {
   if (!sbReady||!currentPseudo) return;
   // Vérifier la deadline au moment de la sauvegarde
   const match = ALL_MATCHES.find(m => m.id === matchId);
@@ -1009,7 +1028,8 @@ async function upsertProno(matchId, winner) {
     showToast('⛔ Ce pronostic est verrouillé — la date limite est dépassée.', 'error');
     return;
   }
-  await sb.from('pronos').upsert({ pseudo:currentPseudo, match_id:matchId, winner }, { onConflict:'pseudo,match_id' });
+  const p = myPronos[matchId] || {};
+  await sb.from('pronos').upsert({ pseudo:currentPseudo, match_id:String(matchId), winner:p.winner||null, score:p.score||null }, { onConflict:'pseudo,match_id' });
 }
 async function upsertSpecial() {
   if (!sbReady||!currentPseudo) return;
@@ -1249,14 +1269,28 @@ function getDrawPlayers(draw) {
 }
 
 function matchRow(m) {
-  const locked=isLocked(m), pred=myPronos[m.id]||{winner:''};
+  const locked=isLocked(m), pred=myPronos[m.id]||{winner:'',score:''};
   const matchNum = getMatchNumber(m);
+  const exactRound = isExactScoreRound(m.phase);
   const gl = `<div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding-top:4px;padding-bottom:2px">
     <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);opacity:0.8">${m.phase}</span>
     <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--text3)">MATCH ${matchNum}</span>
   </div>`;
   if (locked) {
     const res = allResults[m.id];
+    if (res && res.voided) {
+      const winnerName = res.winner ? (res.winner==='home'?m.home:m.away) : null;
+      return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px;opacity:0.7">
+        ${gl}
+        <div class="team-name left" style="color:var(--text3)">${m.home}</div>
+        <div class="vs">–</div><div class="vs">vs</div><div class="vs">–</div>
+        <div class="team-name right" style="color:var(--text3)">${m.away}</div>
+        <div class="match-date" style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span class="locked-badge" style="background:rgba(255,255,255,0.08);color:var(--text3)">⛔ Match annulé (forfait)</span>
+          <span style="font-size:12px;color:var(--text3)">0 point — aucun pronostic compté${winnerName?` · ${winnerName} qualifié`:''}</span>
+        </div>
+      </div>`;
+    }
     let badge = '';
     let homeColor = 'var(--text3)', awayColor = 'var(--text3)';
     if (res && res.winner) {
@@ -1264,11 +1298,21 @@ function matchRow(m) {
       awayColor = res.winner==='away' ? 'var(--green)' : 'var(--text3)';
       if (pred.winner) {
         const mult = PHASE_MULT[m.phase] || 1;
-        if (pred.winner===res.winner) badge = `<span style="color:var(--green);font-size:12px;font-weight:600">✓ Bon vainqueur — ${mult} pt${mult>1?'s':''}</span>`;
-        else badge = `<span style="color:var(--red);font-size:12px">✗ Raté — 0 pt</span>`;
+        if (pred.winner===res.winner) {
+          if (exactRound && res.score) {
+            if (pred.score && pred.score===res.score) {
+              badge = `<span style="color:var(--green);font-size:12px;font-weight:600">✓✓ Vainqueur + score exact — ${mult*2} pts</span>`;
+            } else {
+              badge = `<span style="color:var(--green);font-size:12px;font-weight:600">✓ Bon vainqueur — ${mult} pt${mult>1?'s':''}</span><span style="font-size:11px;color:var(--text3)">Score pronostiqué : ${pred.score||'—'}</span>`;
+            }
+          } else {
+            badge = `<span style="color:var(--green);font-size:12px;font-weight:600">✓ Bon vainqueur — ${mult} pt${mult>1?'s':''}</span>`;
+          }
+        } else badge = `<span style="color:var(--red);font-size:12px">✗ Raté — 0 pt</span>`;
       }
     }
-    const resDisplay = res && res.winner ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--text2)">Vainqueur ▸ ${res.winner==='home'?m.home:m.away}</span>` : '<span class="locked-badge">Verrouillé</span>';
+    const scoreLabel = (exactRound && res && res.score) ? ` (${res.score})` : '';
+    const resDisplay = res && res.winner ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--text2)">Vainqueur ▸ ${res.winner==='home'?m.home:m.away}${scoreLabel}</span>` : '<span class="locked-badge">Verrouillé</span>';
     return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
       ${gl}
       <div class="team-name left" style="color:${homeColor}">${m.home}${pred.winner==='home'?' 📍':''}</div>
@@ -1279,12 +1323,24 @@ function matchRow(m) {
       <div class="match-date" style="display:flex;flex-direction:column;align-items:center;gap:2px">${resDisplay}${badge}</div>
     </div>`;
   }
+  let scoreRow = '';
+  if (exactRound) {
+    const options = VALID_SCORES[m.draw] || [];
+    scoreRow = `<div style="grid-column:1/-1;margin-top:8px">
+      <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:3px">🎯 Score exact en sets (${m.draw==='H'?'3 sets gagnants':'2 sets gagnants'})</label>
+      <select class="form-input" style="font-size:14px;padding:8px" onchange="pickScore(${m.id}, this.value)">
+        <option value="">-- Choisir le score --</option>
+        ${options.map(o=>`<option value="${o}"${pred.score===o?' selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>`;
+  }
   return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
     ${gl}
     <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${m.home}</button>
     <div class="vs">VS</div>
     <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${m.away}</button>
     <div class="match-date" id="pst-${m.id}"><span class="countdown" data-deadline="${new Date(m.deadline).getTime()}"></span><br><span style="color:var(--text3);font-size:13px">${new Date(m.deadline).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} à ${new Date(m.deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></div>
+    ${scoreRow}
   </div>`;
 }
 
@@ -1308,7 +1364,7 @@ function renderPronoContent(tab) {
   let html = `<div class="section-title" style="font-size:1.1rem">${draw==='H'?'🎾 Simple Messieurs':'🎾 Simple Dames'} — ${phase}</div>`;
   Object.entries(byDay).forEach(([day, matches]) => {
     const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
-    html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);padding:10px 0 6px;margin-top:8px;border-bottom:1px solid rgba(251,191,36,0.2);margin-bottom:8px">📅 ${dayLabel}</div>`;
+    html += `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);padding:10px 0 6px;margin-top:8px;border-bottom:1px solid rgba(187,85,34,0.3);margin-bottom:8px">📅 ${dayLabel}</div>`;
     html += '<div class="form-card" style="margin-bottom:12px">';
     matches.forEach((m, idx) => {
       if (idx > 0) html += matchSeparator();
@@ -1322,13 +1378,26 @@ function renderPronoContent(tab) {
 function pickWinner(matchId, side) {
   const match = ALL_MATCHES.find(m=>m.id===matchId);
   if (match && isLocked(match)) { showToast('⛔ Ce pronostic est verrouillé', 'error'); return; }
-  myPronos[matchId] = { winner: side };
+  const prevScore = (myPronos[matchId]||{}).score || '';
+  myPronos[matchId] = { winner: side, score: prevScore };
   renderPronoContent(currentPronoTab);
   clearTimeout(saveTimers[matchId]);
   saveTimers[matchId] = setTimeout(async()=>{
-    await upsertProno(String(matchId), side);
+    await upsertProno(matchId);
     updateDashboard();
     showToast('✓ Pronostic enregistré');
+  },300);
+}
+function pickScore(matchId, scoreStr) {
+  const match = ALL_MATCHES.find(m=>m.id===matchId);
+  if (match && isLocked(match)) { showToast('⛔ Ce pronostic est verrouillé', 'error'); return; }
+  if (!myPronos[matchId]) myPronos[matchId] = { winner:'', score:'' };
+  myPronos[matchId].score = scoreStr;
+  clearTimeout(saveTimers[matchId]);
+  saveTimers[matchId] = setTimeout(async()=>{
+    await upsertProno(matchId);
+    updateDashboard();
+    showToast('✓ Score enregistré');
   },300);
 }
 function renderSpecials(c) {
@@ -1368,73 +1437,86 @@ function renderSpecials(c) {
   </div>`;
 }
 
-// ── Classement ─────────────────────────────────────────────────────────────
+// ── Classement (3 vues : Cumulé / Tableau Messieurs / Tableau Dames) ───────
+let rankingCache = null; // { all:[...], H:[...], D:[...] }
+let currentRankScope = 'all';
+
 async function loadRanking() {
   document.getElementById('ranking-table').innerHTML='<div class="empty-state"><p>Chargement...</p></div>';
-
-  const [{ data: snapshots }, { data: players }, { data: pronoCounts }] = await Promise.all([
-    sb.from('ranking_snapshots').select('pseudo,points,exact,position,match_number').order('position', { ascending: true }),
+  await loadResults();
+  const [{ data: players }, { data: allPronos }] = await Promise.all([
     sb.from('players').select('pseudo'),
-    sb.from('pronos').select('pseudo').neq('match_id','special').limit(20000)
+    sb.from('pronos').select('pseudo,match_id,winner,special').limit(200000)
   ]);
 
-  const counts = {};
-  (pronoCounts||[]).forEach(r => { counts[r.pseudo] = (counts[r.pseudo]||0) + 1; });
-
-  let ranked;
-  if (snapshots && snapshots.length > 0) {
-    const lastMatch = Math.max(...snapshots.map(s => s.match_number||0));
-    const lastSnaps = snapshots.filter(s => s.match_number === lastMatch);
-    // Dédoublonner par pseudo (garder le meilleur score en cas de doublon)
-    const dedupMap = {};
-    lastSnaps.forEach(s => {
-      if (!dedupMap[s.pseudo] || s.points > dedupMap[s.pseudo].points) dedupMap[s.pseudo] = s;
-    });
-    ranked = Object.values(dedupMap).map(s => ({ pseudo: s.pseudo, points: s.points, exact: s.exact||0, count: counts[s.pseudo]||0 }));
-    (players||[]).forEach(p => {
-      if (!ranked.find(r => r.pseudo === p.pseudo))
-        ranked.push({ pseudo: p.pseudo, points: 0, exact: 0, count: counts[p.pseudo]||0 });
-    });
-  } else {
-    await loadResults();
-    const { data:allPronos } = await sb.from('pronos').select('pseudo,match_id,winner,special');
-    if (!players||!players.length) { document.getElementById('ranking-table').innerHTML='<div class="empty-state"><p>Aucun participant.</p></div>'; return; }
-    const byPseudo = {};
-    players.forEach(p=>{ byPseudo[p.pseudo]={ pronos:{}, special:{} }; });
-    (allPronos||[]).forEach(r=>{
-      if (!byPseudo[r.pseudo]) byPseudo[r.pseudo]={ pronos:{}, special:{} };
-      if (r.match_id==='special') byPseudo[r.pseudo].special=r.special||{};
-      else byPseudo[r.pseudo].pronos[r.match_id]={ winner:r.winner };
-    });
-    ranked = Object.entries(byPseudo).map(([pseudo,d])=>{
-      const sc=computeScore(d.pronos,d.special);
-      return { pseudo, ...sc, count:Object.keys(d.pronos).length };
-    });
+  if (!players || !players.length) {
+    rankingCache = { all:[], H:[], D:[] };
+    document.getElementById('stat-participants').textContent = 0;
+    renderRankingTable(currentRankScope);
+    return;
   }
-  ranked.sort((a,b)=>b.points-a.points||b.exact-a.exact);
 
+  const byPseudo = {};
+  players.forEach(p=>{ byPseudo[p.pseudo]={ pronos:{}, special:{} }; });
+  (allPronos||[]).forEach(r=>{
+    if (!byPseudo[r.pseudo]) byPseudo[r.pseudo]={ pronos:{}, special:{} };
+    if (r.match_id==='special') byPseudo[r.pseudo].special=r.special||{};
+    else byPseudo[r.pseudo].pronos[r.match_id]={ winner:r.winner };
+  });
+
+  rankingCache = { all:[], H:[], D:[] };
+  ['all','H','D'].forEach(scope=>{
+    const list = Object.entries(byPseudo).map(([pseudo,d])=>{
+      const sc = computeScore(d.pronos, d.special, scope);
+      const count = scope==='all' ? Object.keys(d.pronos).length : Object.keys(d.pronos).filter(mid=>{
+        const m = ALL_MATCHES.find(x=>String(x.id)===String(mid));
+        return m && m.draw===scope;
+      }).length;
+      return { pseudo, points:sc.points, exact:sc.exact, count };
+    });
+    list.sort((a,b)=>b.points-a.points||b.exact-a.exact);
+    rankingCache[scope]=list;
+  });
+
+  // Les stats du tableau de bord (ma position, mon total) reflètent toujours le cumulé
+  const rankedAll = rankingCache.all;
   if (currentPseudo) {
-    const pos = ranked.findIndex(r=>r.pseudo===currentPseudo);
+    const pos = rankedAll.findIndex(r=>r.pseudo===currentPseudo);
     const rankEl = document.getElementById('my-rank');
     if (rankEl) rankEl.textContent = pos>=0 ? '#'+(pos+1) : '–';
-    const me = ranked.find(r=>r.pseudo===currentPseudo);
+    const me = rankedAll.find(r=>r.pseudo===currentPseudo);
     if (me) { document.getElementById('my-total').textContent=me.points; document.getElementById('my-exact').textContent=me.exact; }
   }
-  document.getElementById('stat-participants').textContent = ranked.length;
+  document.getElementById('stat-participants').textContent = rankedAll.length;
 
+  renderRankingTable(currentRankScope);
+}
+
+function switchRankScope(scope, btn) {
+  currentRankScope = scope;
+  document.querySelectorAll('#rank-scope-tabs button').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (rankingCache) renderRankingTable(scope); else loadRanking();
+}
+
+function renderRankingTable(scope) {
+  const el = document.getElementById('ranking-table');
+  if (!rankingCache) { el.innerHTML='<div class="empty-state"><p>Chargement...</p></div>'; return; }
+  const ranked = rankingCache[scope] || [];
   let html=`<div class="rank-row header"><div></div><div>Participant</div><div style="text-align:center">Points</div><div style="text-align:center">Bons vainqueurs</div></div>`;
   ranked.forEach((r,i)=>{
     const medals=['🥇','🥈','🥉'];
     const cls = i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const isMe = r.pseudo===currentPseudo;
-    html+=`<div class="rank-row" style="${isMe?'background:rgba(251,191,36,0.07)':''}">
+    html+=`<div class="rank-row" style="${isMe?'background:rgba(255,255,255,0.07)':''}">
       <div class="rank-num ${cls}">${medals[i]||('#'+(i+1))}</div>
       <div class="rank-pseudo">${r.pseudo}${isMe?' <span style="font-size:13px;color:var(--gold)">(moi)</span>':''}</div>
       <div class="rank-pts">${r.points}</div>
       <div class="rank-exact">${r.exact}</div>
     </div>`;
   });
-  document.getElementById('ranking-table').innerHTML=html;
+  if (!ranked.length) html += `<div class="empty-state" style="padding:1.5rem"><p>Aucun participant.</p></div>`;
+  el.innerHTML=html;
 }
 
 // ── Admin ──────────────────────────────────────────────────────────────────
@@ -1462,16 +1544,25 @@ async function renderAdminMatches() {
   DRAWS.forEach(draw=>{
     ROUNDS.forEach(round=>{
       const ms=ALL_MATCHES.filter(m=>m.draw===draw && m.phase===round).sort((a,b)=>a.id-b.id); if (!ms.length) return;
-      html+=`<div class="group-header">${DRAW_LABEL[draw]} — ${round}</div><div class="form-card" style="margin-bottom:8px">`;
+      const exactRound = isExactScoreRound(round);
+      html+=`<div class="group-header">${DRAW_LABEL[draw]} — ${round}${exactRound?' <span style="font-size:11px;color:var(--text3);font-weight:400">(score exact)</span>':''}</div><div class="form-card" style="margin-bottom:8px">`;
       ms.forEach(m=>{
         const res=allResults[m.id]||{};
-        html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+        const scoreOpts = exactRound ? (VALID_SCORES[draw]||[]) : [];
+        html+=`<div style="display:grid;grid-template-columns:${exactRound?'1.3fr 1fr 0.8fr auto':'1.3fr 1fr auto'};gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
           <div class="team-name left" style="font-size:14px">${m.home} <span style="color:var(--text3)">vs</span> ${m.away}</div>
-          <select class="form-input" id="res-${m.id}">
+          <select class="form-input" id="res-${m.id}" style="font-size:14px">
             <option value="">-- Vainqueur --</option>
             <option value="home"${res.winner==='home'?' selected':''}>${m.home}</option>
             <option value="away"${res.winner==='away'?' selected':''}>${m.away}</option>
           </select>
+          ${exactRound ? `<select class="form-input" id="sc-${m.id}" style="font-size:14px">
+            <option value="">-- Score --</option>
+            ${scoreOpts.map(o=>`<option value="${o}"${res.score===o?' selected':''}>${o}</option>`).join('')}
+          </select>` : ''}
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text3);white-space:nowrap;cursor:pointer">
+            <input type="checkbox" id="vo-${m.id}" ${res.voided?'checked':''}> ⛔ Forfait (0 pt)
+          </label>
         </div>`;
       });
       html+='</div>';
@@ -1479,18 +1570,62 @@ async function renderAdminMatches() {
   });
   document.getElementById('admin-matches-list').innerHTML=html;
 }
+// ── Propagation automatique des qualifiés au tour suivant ─────────────────
+// Quand un résultat est saisi, le nom du vainqueur est automatiquement
+// placé dans le match du tour suivant qu'il doit disputer.
+function propagateWinnersToNextRound(upserts) {
+  const koUpdates = {};
+  let count = 0;
+  upserts.forEach(u => {
+    const m = ALL_MATCHES.find(x => String(x.id) === String(u.match_id));
+    if (!m) return;
+    const ri = ROUNDS.indexOf(m.phase);
+    if (ri === -1 || ri === ROUNDS.length - 1) return; // Finale : pas de tour suivant
+    const roundMatches = ALL_MATCHES.filter(x => x.draw===m.draw && x.phase===m.phase).sort((a,b)=>a.id-b.id);
+    const k = roundMatches.findIndex(x => x.id === m.id) + 1; // position 1-indexée dans le tour
+    if (k === 0) return;
+    const nextRound = ROUNDS[ri+1];
+    const nextMatches = ALL_MATCHES.filter(x => x.draw===m.draw && x.phase===nextRound).sort((a,b)=>a.id-b.id);
+    const nextK = Math.ceil(k/2);
+    const nextMatch = nextMatches[nextK-1];
+    if (!nextMatch) return;
+    const targetSlot = (k % 2 === 1) ? nextMatch.slotA : nextMatch.slotB;
+    const winnerName = u.winner==='home' ? m.home : m.away;
+    koUpdates[m.draw+targetSlot] = winnerName;
+    count++;
+  });
+  return { koUpdates, count };
+}
 async function saveAdminResults() {
   const btn=document.getElementById('save-results-btn');
   btn.innerHTML='<span class="spinner"></span>Enregistrement...'; btn.disabled=true;
   const upserts=[];
   ALL_MATCHES.forEach(m=>{
     const sel=document.getElementById(`res-${m.id}`);
-    if (sel && sel.value) upserts.push({ match_id:String(m.id), winner:sel.value });
+    if (!sel || !sel.value) return;
+    const scEl = document.getElementById(`sc-${m.id}`);
+    const voEl = document.getElementById(`vo-${m.id}`);
+    upserts.push({
+      match_id: String(m.id),
+      winner: sel.value,
+      score: (scEl && scEl.value) ? scEl.value : null,
+      voided: !!(voEl && voEl.checked)
+    });
   });
   if (upserts.length) {
     const { error } = await sb.from('results').upsert(upserts,{onConflict:'match_id'});
-    if (error) showToast('Erreur : '+error.message,'error');
-    else { showToast(`${upserts.length} résultats enregistrés !`); await loadResults(); takeRankingSnapshot(); }
+    if (error) { showToast('Erreur : '+error.message,'error'); btn.innerHTML='Enregistrer les résultats'; btn.disabled=false; return; }
+    // Propager automatiquement les vainqueurs vers le tour suivant
+    const { koUpdates, count } = propagateWinnersToNextRound(upserts);
+    if (count > 0) {
+      KO_NAMES = Object.assign({}, KO_NAMES, koUpdates);
+      await saveConfigToDb({ ko_names: KO_NAMES });
+    }
+    await loadResults();
+    ALL_MATCHES = buildMatches();
+    takeRankingSnapshot();
+    renderAdminMatches();
+    showToast(`${upserts.length} résultat${upserts.length>1?'s':''} enregistré${upserts.length>1?'s':''}${count>0?` — ${count} match${count>1?'s':''} du tour suivant mis à jour`:''} !`);
   } else showToast('Aucun résultat à enregistrer','info');
   btn.innerHTML='Enregistrer les résultats'; btn.disabled=false;
 }
@@ -1674,7 +1809,7 @@ function openAdminVisuel() {
   document.getElementById('admin-badge-txt').value = appConfig.badgeText || '';
   document.getElementById('admin-hero-title').value = appConfig.heroTitle || '';
   document.getElementById('admin-hero-sub').value = appConfig.heroSubtitle || '';
-  const color = appConfig.accentColor || '#FBBF24';
+  const color = appConfig.accentColor || '#BB5522';
   document.getElementById('admin-accent-color').value = color;
   document.getElementById('admin-accent-hex').value = color;
   document.getElementById('admin-color-preview').style.background = color;
@@ -2012,7 +2147,7 @@ async function loadEvolutionChart() {
 
   // Pseudos à afficher : joueur courant + compareList (max 5)
   const toShow = [currentPseudo, ...compareList.slice(0,5)].filter(Boolean);
-  const colors = ['#FBBF24','#3b82f6','#22c55e','#ef4444','#a855f7','#f97316'];
+  const colors = ['#FFFFFF','#3b82f6','#22c55e','#ef4444','#a855f7','#f97316'];
 
   // Datasets
   const datasets = toShow.map((pseudo, idx) => {
