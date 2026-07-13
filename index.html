@@ -58,7 +58,7 @@ body{font-family:'Aptos','Outfit',system-ui,sans-serif;background:var(--bg);colo
 .hero-logo{display:flex;justify-content:center;align-items:center;padding:1.5rem 0 0.5rem;position:relative;z-index:2}
 .hero-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#06492D;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:10px;box-shadow:0 2px 10px rgba(255,255,255,0.4)}
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,7vw,4rem);letter-spacing:4px;line-height:1;text-shadow:0 2px 20px rgba(245,200,66,0.2)}
-.hero h1 span{color:var(--gold);text-shadow:0 0 30px rgba(217,115,64,0.6)}
+.hero h1 span{color:#BB5522;text-shadow:0 0 30px rgba(187,85,34,0.6)}
 .hero p{color:var(--text2);font-size:15px;margin-top:6px;letter-spacing:0.5px}
 
 .hero-stats{display:flex;justify-content:center;gap:0;margin-top:1.25rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.06);padding-top:1rem}
@@ -95,6 +95,7 @@ select.form-input{appearance:none;cursor:pointer}
 
 /* ── MATCH ROWS ── */
 .match-row{display:grid;grid-template-columns:1fr 56px auto 56px 1fr;align-items:center;gap:6px;padding:10px 0;border-bottom:1px solid var(--border);transition:background .15s;border-radius:6px}
+.match-row.picking{grid-template-columns:1fr 56px 1fr}
 .match-row:hover{background:rgba(245,200,66,0.04)}
 .match-row:last-child{border-bottom:none}
 .team-name{font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
@@ -195,6 +196,7 @@ select.form-input{appearance:none;cursor:pointer}
 }
 @media(max-width:500px){
   .match-row{grid-template-columns:1fr 44px auto 44px 1fr;gap:4px}
+  .match-row.picking{grid-template-columns:1fr 44px 1fr}
   .team-name{font-size:15px}
   .score-input{padding:8px 4px;font-size:1.2rem}
   .pick-btn{padding:8px 3px;font-size:11px}
@@ -1108,8 +1110,7 @@ async function upsertSpecial() {
 
 // ── Comptes à rebours ─────────────────────────────────────────────────────
 function cdColor(d,h,m) {
-  if (d >= 7) return 'var(--green)';
-  if (d >= 3) return 'var(--gold)';
+  if (d >= 3) return 'var(--green)';
   if (d >= 1) return '#f97316';
   return 'var(--red)';
 }
@@ -1398,12 +1399,12 @@ function matchRow(m) {
       </select>
     </div>`;
   }
-  return `<div class="match-row" data-match-id="${m.id}" style="padding-top:2px">
+  return `<div class="match-row picking" data-match-id="${m.id}" style="padding-top:2px">
     ${gl}
     <button type="button" class="pick-btn ${pred.winner==='home'?'picked':''}" onclick="pickWinner(${m.id},'home')">${flagFor(m.home)}${m.home}</button>
     <div class="vs">VS</div>
     <button type="button" class="pick-btn ${pred.winner==='away'?'picked':''}" onclick="pickWinner(${m.id},'away')">${flagFor(m.away)}${m.away}</button>
-    <div class="match-date" id="pst-${m.id}"><span class="countdown" data-deadline="${new Date(m.deadline).getTime()}"></span><br><span style="color:var(--text3);font-size:13px">${new Date(m.deadline).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} à ${new Date(m.deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></div>
+    <div class="match-date" id="pst-${m.id}"><span class="countdown" data-deadline="${new Date(m.deadline).getTime()}"></span><br><span style="color:var(--text);font-size:13px">${new Date(m.deadline).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})} à ${new Date(m.deadline).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></div>
     ${scoreRow}
   </div>`;
 }
@@ -2152,7 +2153,7 @@ function startMainCountdown() {
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
-    const col = d >= 7 ? 'var(--green)' : d >= 3 ? 'var(--gold)' : d >= 1 ? '#f97316' : 'var(--red)';
+    const col = d >= 3 ? 'var(--green)' : d >= 1 ? '#f97316' : 'var(--red)';
     el.innerHTML = unit(d,'jours',col) + unit(h,'heures',col) + unit(m,'minutes',col) + unit(s,'secondes',col);
   }
   tick();
