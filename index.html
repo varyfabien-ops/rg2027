@@ -91,7 +91,7 @@ nav button.nav-tab:hover:not(.active){color:var(--text);background:var(--bg3)}
 .form-card{background:var(--bg2);border:1px solid var(--gold);border-radius:14px;padding:1.25rem;margin-bottom:1rem;transition:border-color .2s}
 .form-card:hover{border-color:var(--border2)}
 .form-label{font-size:15px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
-.form-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;outline:none;transition:border .2s}
+.form-input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Aptos','Outfit',system-ui,sans-serif;font-size:16px;outline:none;transition:border .2s}
 .form-input:focus{border-color:var(--gold)}
 select.form-input{appearance:none;cursor:pointer}
 
@@ -174,6 +174,7 @@ select.form-input{appearance:none;cursor:pointer}
 .account-sub{font-size:14px;color:var(--text3);margin-top:2px}
 
 @media(max-width:600px){
+  #side-deco-left, #side-deco-right{display:none !important}
   /* ── NAV MOBILE : 2 lignes ── */
   nav{display:block;position:sticky;top:0;z-index:100;background:var(--bg2)}
   nav .nav-row{display:flex;width:100%}
@@ -2410,5 +2411,31 @@ async function init() {
 }
 init();
 </script>
+<div id="side-deco-left" style="position:fixed;bottom:0;left:0;width:220px;max-width:18vw;pointer-events:none;z-index:0;opacity:0.5">
+  <svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+    <ellipse cx="100" cy="290" rx="90" ry="14" fill="#000" opacity="0.15"/>
+    <g transform="translate(20,40) rotate(-12)">
+      <rect x="55" y="90" width="14" height="150" rx="7" fill="#3D1F0F"/>
+      <ellipse cx="62" cy="60" rx="58" ry="72" fill="none" stroke="#3D1F0F" stroke-width="12"/>
+      <ellipse cx="62" cy="60" rx="58" ry="72" fill="none" stroke="#0B5C3A" stroke-width="4"/>
+      <path d="M12,20 Q62,-10 112,20 M8,55 L116,55 M12,90 Q62,120 112,90 M35,-2 Q45,60 35,122 M89,-2 Q79,60 89,122" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.85"/>
+    </g>
+    <circle cx="150" cy="235" r="34" fill="#BB5522"/>
+    <path d="M124,222 Q150,238 176,222 M124,248 Q150,232 176,248" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+  </svg>
+</div>
+<div id="side-deco-right" style="position:fixed;bottom:0;right:0;width:220px;max-width:18vw;pointer-events:none;z-index:0;opacity:0.5">
+  <svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;transform:scaleX(-1)">
+    <ellipse cx="100" cy="290" rx="90" ry="14" fill="#000" opacity="0.15"/>
+    <g transform="translate(20,40) rotate(-12)">
+      <rect x="55" y="90" width="14" height="150" rx="7" fill="#3D1F0F"/>
+      <ellipse cx="62" cy="60" rx="58" ry="72" fill="none" stroke="#3D1F0F" stroke-width="12"/>
+      <ellipse cx="62" cy="60" rx="58" ry="72" fill="none" stroke="#0B5C3A" stroke-width="4"/>
+      <path d="M12,20 Q62,-10 112,20 M8,55 L116,55 M12,90 Q62,120 112,90 M35,-2 Q45,60 35,122 M89,-2 Q79,60 89,122" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.85"/>
+    </g>
+    <circle cx="150" cy="235" r="34" fill="#BB5522"/>
+    <path d="M124,222 Q150,238 176,222 M124,248 Q150,232 176,248" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+  </svg>
+</div>
 </body>
 </html>
